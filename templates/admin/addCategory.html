@@ -1,0 +1,63 @@
+{% extends 'admin/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="am-pagetitle">
+        <h5 class="am-title">Add Category</h5>
+        <!-- search-bar -->
+    </div><!-- am-pagetitle -->
+
+    <div class="am-mainpanel">
+        <div class="am-pagebody">
+            <form action="/admin/insertCategory" method="post">
+            {% csrf_token %}
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="card">
+                            <div class="card pd-20 pd-sm-40">
+                                <h6 class="card-body-title mg-sm-b-30">Add Category</h6>
+                                <p style="color: red;">NOTE : all data must be lower letter and do not use any
+                                    symbol.</p>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <label class="col-sm-4 form-control-label">Category<span
+                                                class="tx-danger">*</span></label>
+                                        <div class="col-sm-8 mg-t-10 mg-sm-t-0">
+                                            <input type="text" class="form-control" name="category" required
+                                                   placeholder="ex: men,women,kids,...">
+                                        </div>
+                                    </div>
+                                    <br><!-- row -->
+
+                                    <div class="row">
+                                        <label class="col-sm-4 form-control-label">SubCategory<span
+                                                class="tx-danger">*</span></label>
+                                        <div class="col-sm-8 mg-t-10 mg-sm-t-0">
+                                            <input type="text" class="form-control" name="subcategory" required
+                                                   placeholder="ex: top wear, bottom wear, night wear,...">
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <label class="col-sm-4 form-control-label">Type<span
+                                                class="tx-danger">*</span></label>
+                                        <div class="col-sm-8 mg-t-10 mg-sm-t-0">
+                                            <input type="text" class="form-control" name="type" required
+                                                   placeholder="ex: t shirt, pent, trouser,...">
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="form-layout-footer mg-t-30">
+                                        <button class="btn btn-info mg-r-5" type="submit">Submit</button>
+                                    </div><!-- form-layout-footer -->
+                                    {% if categoryExist %}
+                                        <center><p style="color: red">{{ categoryExist }}</p></center>
+                                    {% endif %}
+                                </div>
+                            </div><!-- card -->
+                        </div><!-- col-6 -->
+                    </div>
+                </div>
+            </form>
+        </div><!-- card -->
+{% endblock %}

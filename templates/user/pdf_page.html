@@ -1,0 +1,186 @@
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Invoice</title>#}
+{#    <style>#}
+{#        th, td {#}
+{#            padding: 3px;#}
+{#        }#}
+{##}
+{#        th {#}
+{#            background-color: black;#}
+{#            color: white;#}
+{#        }#}
+{##}
+{#        @page {#}
+{#            size: a4 portrait;#}
+{#            @frame header_frame {#}
+{#            -pdf-frame-content: header_content;#}
+{#            left: 60pt;#}
+{#            width: 512pt;#}
+{#            top: 60pt;#}
+{#            height: 50pt#}
+{#        }#}
+{#        }#}
+{##}
+{#        @frame footer_frame {#}
+{#            -pdf-frame-content: footer_content;#}
+{#            left: 60pt;#}
+{#            width: 512pt;#}
+{#            top: 772pt;#}
+{#            height: 30pt#}
+{#        }#}
+{#        @frame content_frame {#}
+{#            left: 50pt;#}
+{#            width: 512pt;#}
+{#            top: 90pt;#}
+{#            height: 620pt;#}
+{#        }#}
+{#    </style>#}
+{#</head>#}
+{#<body>#}
+{#<div id="header_content">#}
+{#    <h1 style="color: blue;text-align: center">E-shopper</h1>#}
+{#</div>#}
+{#<table class="table" border="1">#}
+{#    <tr>#}
+{#        <th>Order Id</th>#}
+{#        <th>Order Date</th>#}
+{#        <th>Email</th>#}
+{##}
+{#    </tr>#}
+{#    <tr>#}
+{#        <td>{{ orderList.id }}</td>#}
+{#        <td>{{ orderList.orderDate }}</td>#}
+{#        <td>{{ orderList.userId.loginEmail }}</td>#}
+{##}
+{#    </tr>#}
+{#</table>#}
+{#<label>Address</label>#}
+{#<p>{{ orderList.address.fullName }},{{ orderList.address.home }},{{ orderList.address.address }},#}
+{#    {{ orderList.address.landmark }},{{ orderList.address.town }},{{ orderList.address.state }},{{ orderList.address.country }}</p>#}
+{##}
+{#<label>mobile no</label>#}
+{#<p>{{ orderList.address.mobileNo }}</p>#}
+{##}
+{#<label>Product</label>#}
+{#<table class="table" border="1">#}
+{#    <tr>#}
+{#        <th>Name</th>#}
+{#        <th>price</th>#}
+{#        <th>Quantity</th>#}
+{#        <th>total price</th>#}
+{##}
+{#    </tr>#}
+{#    {% load custome_tags %}#}
+{#    {% to_dict orderList.product as product %}#}
+{#    {% for key,value in product.items %}#}
+{#    <tr>#}
+{##}
+{#        <td>{{ value.name }}</td>#}
+{#        <td>{{ value.price }}</td>#}
+{#        <td>{{ value.quantity }}</td>#}
+{#        <td>{{ value.totalprice }}</td>#}
+{##}
+{#    </tr>#}
+{#    {% endfor %}#}
+{#</table>#}
+{##}
+{#<label>total Order Price</label>#}
+{#<p>{{ orderList.totalPrice }}</p>#}
+{##}
+{#<div id="footer_content">#}
+{#    This is Footer Print on Every Page of Pdf Page No.#}
+{#    <pdf:pagenumber> / Total Page :#}
+{#        <pdf:pagecount>#}
+{#</div>#}
+{#</body>#}
+{#</html>#}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice</title>
+    {#    <style>#}
+    {#        table {#}
+    {#                    font-family: arial, sans-serif; border-collapse: collapse;#}
+    {#            width: 100%;#}
+    {#            border: 0px solid white;#}
+    {#        }#}
+    {##}
+    {#        th {#}
+    {#            border: 1px solid white;#}
+    {#            text-align: center;#}
+    {#            font-weight: bold;#}
+    {#            padding: 10px;#}
+    {#        }#}
+    {##}
+    {#        td {#}
+    {#            border: 1px solid white;#}
+    {#            text-align: center;#}
+    {#            padding: 12px;#}
+    {#        }#}
+    {##}
+    {#        tr:nth-child(even) {#}
+    {#            background-color: hsla(0, 10%, 90%, 0.3);;#}
+    {#        }#}
+    {#    </style>#}
+</head>
+<div>
+    <center><h1 style="color: blue; padding-top: 30px;">E-shopper</h1></center>
+    <table border="1" style="padding-top: 3px;">
+        <tr>
+            <th>Order Id</th>
+            <th>Order Date</th>
+            <th>Email</th>
+        </tr>
+        <tr style="text-align: center">
+            <td>{{ orderList.id }}</td>
+            <td>{{ orderList.orderDate }}</td>
+            <td>{{ orderList.userId.loginEmail }}</td>
+        </tr>
+    </table>
+    <br/>
+    <h1 style="padding-bottom: -15px;">Address : </h1>
+    <p>{{ orderList.address.fullName }},{{ orderList.address.home }},{{ orderList.address.address }},
+        {{ orderList.address.landmark }},{{ orderList.address.town }},{{ orderList.address.state }},{{ orderList.address.country }}</p>
+
+    <h1 style="padding-bottom: -15px;">Mobile No. :</h1>
+    <p>{{ orderList.address.mobileNo }}</p>
+
+    <h1 style="padding-bottom: -15px;">Product</h1>
+    <table border="1" style="padding-top: 3px;">
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Promocode</th>
+            <th>Discount</th>
+            <th>Total Price</th>
+        </tr>
+        {% load custome_tags %}
+        {% to_dict orderList.product as product %}
+        {% for key,value in product.items %}
+            <tr style="text-align: center">
+                <td>{{ value.name }}</td>
+                <td>{{ value.price }}</td>
+                <td>{{ value.quantity }}</td>
+                <td>{{ value.coupon }}</td>
+                <td>{{ value.discount }}</td>
+                <td>{{ value.totalprice }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+<br/>
+
+    <h1 style="padding-bottom: -15px;">Total Order Price</h1>
+    <p>{{ orderList.totalPrice }}</p><br/><br/>
+
+    This is Footer Print on Every Page of Pdf Page No.
+    <pdf:pagenumber> / Total Page :
+        <pdf:pagecount>
+
+</div>
+</html>

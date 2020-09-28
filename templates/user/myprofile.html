@@ -1,0 +1,248 @@
+{% extends 'user/base.html' %}
+
+{% load static %}
+
+{% block title %}MyProfile Page{% endblock %}
+
+{% block content %}
+
+    <script type="text/javascript">
+
+        function deleteAddress(id) {
+            {#            alert("orderId   " + orderId);#}
+            var id = id;
+            {#            alert("quantity   " + quantity);#}
+
+            var ajax = new XMLHttpRequest();
+
+            ajax.onreadystatechange = function () {
+
+                if (ajax.readyState == 4) {
+
+                    var jsn = JSON.parse(ajax.responseText);
+
+                    document.getElementById("deleteId" + id).remove();
+
+                }
+            };
+            ajax.open("get", "/deleteAddress?addressId=" + id, true);
+
+            ajax.send()
+        }
+    </script>
+    <script type="text/javascript">
+
+        function insertDefault(id) {
+            {#            alert("orderId   " + orderId);#}
+            var id = id;
+            {#            alert("quantity   " + quantity);#}
+
+            var ajax = new XMLHttpRequest();
+
+            ajax.onreadystatechange = function () {
+
+                if (ajax.readyState == 4) {
+
+                    var jsn = JSON.parse(ajax.responseText);
+                    var beforeDefault = jsn['beforeDefault']
+
+                    if (id == beforeDefault) {
+                        document.getElementById("deleteId" + id).style.backgroundColor = "yellow";
+                    }
+                    else {
+                        document.getElementById("deleteId" + beforeDefault).style.backgroundColor = "";
+                        document.getElementById("deleteId" + id).style.backgroundColor = "yellow";
+
+                    }
+
+
+                }
+            };
+            ajax.open("get", "/insertDefault?addressId=" + id, true);
+
+            ajax.send()
+        }
+    </script>
+
+
+    <div class="total_area" style="padding-top: 30px;">
+        <div style="background-color: hsla(0, 10%, 70%, 0.3); margin-bottom: 15px;">
+            <center>
+                <div class="page-title-heading">
+                    <h1 class="title">My Profile</h1>
+                </div><!-- /.page-title-heading -->
+                <div class="breadcrumbs" style="margin-top: 20px;">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/loadMyprofile">My Profile</a></li>
+                    </ul>
+                </div>
+            </center>
+        </div>
+    </div>
+
+
+    <section id="cart_items" style="margin-top: 20px;">
+        <div class="container">
+
+
+            {% if c_passError %}
+                <p style="color: red;">{{ c_passError }}</p>
+            {% endif %}
+            {% if matchError %}
+                <p style="color: red;">{{ matchError }}</p>
+            {% endif %}
+            {% if sucess %}
+                <p style="color: red;">{{ sucess }}</p>
+            {% endif %}
+
+            <div class="col-sm-12" style="width: 100%">
+                <div class="total_area" style="padding-bottom: 10px; padding-top: 10px;">
+                    <div style="background-color: hsla(0, 10%, 70%, 0.3); margin-bottom: 15px;">
+                        <h2 style="text-align: left; margin-left: 20px;">My Profile</h2>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="checkout-options">
+
+                <ul class="nav" style="margin-left: 40px;">
+                    <li style="margin-right: 30px;">
+                        <label> Name</label>&nbsp;: &nbsp;<label
+                            style="color: orange;"> {{ request.session.login_UserName }}</label>
+                    </li>
+                    <li style="margin-right: 30px;">
+                        <label> Email</label>&nbsp;: &nbsp;<label
+                            style="color: orange;"> {{ request.session.login_Email }}</label>
+                    </li>&nbsp;&nbsp;&nbsp;
+                    <li>
+                        <label> Mobile No</label>&nbsp;: &nbsp;<label
+                            style="color: orange;"> {{ request.session.login_MobileNO }}</label>
+                    </li>
+
+
+                </ul>
+            </div><!--/checkout-options-->
+
+            <div class="col-sm-12" style="width: 100%">
+                <div class="total_area" style="padding-bottom: 10px; margin-top: 20px;">
+                    <div style="background-color: hsla(0, 10%, 70%, 0.3); margin-bottom: 15px;">
+                        <h2 style="text-align: left; margin-left: 20px;">Address</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="shopper-informations">
+                <div class="row" style="margin-left: 40px;">
+                    {% for i in viewAddress %}
+                        {% if i.action == "default" %}
+                            <div class="col-sm-4" id="deleteId{{ i.id }}" style="background-color: yellow">
+                                <div class="shopper-info">
+                                    <ul class="nav">
+                                        <li>
+                                            <label> Name</label>&nbsp;: &nbsp;<label
+                                                style="color: orange;"> {{ i.fullName }}</label>
+                                        </li>
+                                        <li>
+                                            <label> Mobile No</label>&nbsp;: &nbsp;<label
+                                                style="color: orange;"> {{ i.mobileNo }}</label>
+                                        </li>
+                                        <li>
+                                            <label> Address</label>&nbsp;: &nbsp;<label
+                                                style="color: orange;">{{ i.home }}<br>{{ i.address }}<br>{{ i.landmark }}<br>{{ i.town }}<br>{{ i.state }}<br>{{ i.country }}
+                                        </label>
+                                        </li>
+
+                                    </ul>
+                                    <a href="/editAddress?addressId={{ i.id }}">
+                                        <button class="btn btn-default" type="submit ">Edit</button>
+                                    </a>
+                                    <a onclick="deleteAddress({{ i.id }})">
+                                        <button class="btn btn-default" type="submit ">Delete</button>
+                                    </a>
+                                    <a onclick="insertDefault({{ i.id }})">
+                                        <button class="btn btn-default" type="submit ">Default</button>
+                                    </a>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="col-sm-4" id="deleteId{{ i.id }}">
+                                <div class="shopper-info">
+                                    <ul class="nav">
+                                        <li>
+                                            <label> Name</label>&nbsp;: &nbsp;<label
+                                                style="color: orange;"> {{ i.fullName }}</label>
+                                        </li>
+                                        <li>
+                                            <label> Mobile No</label>&nbsp;: &nbsp;<label
+                                                style="color: orange;"> {{ i.mobileNo }}</label>
+                                        </li>
+                                        <li>
+                                            <label> Address</label>&nbsp;: &nbsp;<label
+                                                style="color: orange;">{{ i.home }}<br>{{ i.address }}<br>{{ i.landmark }}<br>{{ i.town }}<br>{{ i.state }}<br>{{ i.country }}
+                                        </label>
+                                        </li>
+
+                                    </ul>
+                                    <a href="/editAddress?addressId={{ i.id }}">
+                                        <button class="btn btn-default" type="submit ">Edit</button>
+                                    </a>
+                                    <a onclick="deleteAddress({{ i.id }})">
+                                        <button class="btn btn-default" type="submit ">Delete</button>
+                                    </a>
+                                    <a onclick="insertDefault({{ i.id }})">
+                                        <button class="btn btn-default" type="submit ">Default</button>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+
+
+                    <div class="col-sm-4">
+                        <div class="shopper-info">
+                            <ul class="nav">
+
+
+                            </ul>
+                            <a href="/loadAddress">
+                                <button class="btn btn-default" type="submit ">New <br>Address</button>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-sm-12" style="width: 100%">
+                <div class="total_area" style="padding-bottom: 10px; margin-top: 20px;">
+                    <div style="background-color: hsla(0, 10%, 70%, 0.3); margin-bottom: 15px;">
+                        <h2 style="text-align: left; margin-left: 20px;">Reset Password</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="shopper-informations" style="margin-left: 40px;">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="shopper-info">
+                            <form method="post" action="/updatePassword">
+                                {% csrf_token %}
+
+                                <input type="text" placeholder="Current Password" name="currentPassword">
+                                <input type="text" placeholder="New Password" name="newPasssword">
+                                <input type="text" placeholder="Confirm New Password" name="cofirmPassword">
+                                <center><button type="submit" class="btn btn-default" style="margin-top: 10px; margin-bottom: 30px;">Submit</button></center>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </section> <!--/#cart_items-->
+    <br>
+{% endblock %}

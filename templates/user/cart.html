@@ -1,0 +1,507 @@
+{% extends 'user/base.html' %}
+
+{% load static %}
+
+{% block title %}Cart Page{% endblock %}
+
+{% block content %}
+    <!-- <script>
+         function totalAmount() {
+             var x = document.getElementById("quantity").value;
+             var price = document.getElementById("price").textContent;
+             var p = parseInt(price)
+             var total = x * p;
+             document.getElementById("totalPrice").innerHTML = total;
+         }
+     </script>--><!-- quantity increament-->
+
+    <!--<script type="text/javascript">
+
+        function totalAmount(orderId) {
+            {#            alert("orderId   " + orderId);#}
+            var quantity = document.getElementById("quantity" + orderId).value;
+            {#            alert("quantity   " + quantity);#}
+
+            var ajax = new XMLHttpRequest();
+
+            ajax.onreadystatechange = function () {
+
+                if (ajax.readyState == 4) {
+
+                    var jsn = JSON.parse(ajax.responseText);
+
+                    var totalAmount = jsn['totalAmount']
+                    var totalOrderAmount = jsn['totalOrderAmount']
+                    {#                    alert("ajax total prise   "+totalOrderAmount)#}
+                    document.getElementById("totalPrice" + orderId).textContent = totalAmount
+                    document.getElementById("totalOrderAmount").textContent = totalOrderAmount
+                }
+            };
+            ajax.open("get", "/totalAmount?orderId=" + orderId + "&quantity=" + quantity, true);
+
+            ajax.send()
+        }
+
+    </script>--><!-- product total amount Ajax -->
+
+    <!--<script type="text/javascript">
+
+        function deleteOrder(id,value) {
+            {#            alert("orderId   " + orderId);#}
+            var id = id;
+            var productId = value;
+            {#            alert("quantity   " + quantity);#}
+
+            var ajax = new XMLHttpRequest();
+
+            ajax.onreadystatechange = function () {
+
+                if (ajax.readyState == 4) {
+
+                    var jsn = JSON.parse(ajax.responseText);
+
+                    document.getElementById("deleteId" + id).remove();
+                    var totalOrderAmount = jsn['totalOrderAmount']
+                    document.getElementById("totalOrderAmount").textContent = totalOrderAmount
+
+
+                }
+            };
+            ajax.open("get", "/deleteOrder?orderId=" + id, true);
+
+            ajax.send()
+        }
+    </script>--><!-- delete order Ajax-->
+
+    <script type="text/javascript">
+
+        function totalAmount(productId) {
+            var quantity = document.getElementById("quantity" + productId).value;
+
+            var ajax = new XMLHttpRequest();
+
+            ajax.onreadystatechange = function () {
+
+                if (ajax.readyState == 4) {
+
+                    var jsn = JSON.parse(ajax.responseText);
+
+                    var totalAmount = jsn['totalAmount'];
+                    var totalOrderAmount = jsn['totalOrderAmount'];
+                    {#                    alert("ajax total prise   "+totalOrderAmount)#}
+                    document.getElementById("totalPrice" + productId).textContent = totalAmount
+                    document.getElementById("totalOrderAmount").textContent = totalOrderAmount
+                }
+            };
+            ajax.open("get", "/totalAmount?productId=" + productId + "&quantity=" + quantity, true);
+
+            ajax.send()
+        }
+
+    </script>
+
+    <script type="text/javascript">
+
+        function deleteOrder(productId) {
+            var productId = productId;
+            {#            alert("quantity   " + quantity);#}
+
+            var ajax = new XMLHttpRequest();
+
+            ajax.onreadystatechange = function () {
+
+                if (ajax.readyState == 4) {
+
+                    var jsn = JSON.parse(ajax.responseText);
+                    var deleteItemId = jsn['deleteItemId']
+
+                    document.getElementById("deleteId" + deleteItemId).remove();
+                    var totalOrderAmount = jsn['totalOrderAmount']
+                    document.getElementById("totalOrderAmount").textContent = totalOrderAmount
+
+
+                }
+            };
+            ajax.open("get", "/deleteOrder?productId=" + productId, true);
+
+            ajax.send()
+        }
+    </script>
+
+    <script type="text/javascript">
+
+        function showsize(productId) {
+            {#            alert(productId);#}
+            {#            alert("quantity   " + quantity);#}
+
+            var ajax = new XMLHttpRequest();
+
+            ajax.onreadystatechange = function () {
+
+                if (ajax.readyState == 4) {
+
+                    var jsn = JSON.parse(ajax.responseText);
+
+
+                    var select = document.getElementById('size' + productId);
+                    for (x in jsn['size']) {
+
+                        var option = document.createElement("option");
+                        option.text = x;
+                        option.value = x;
+                        select.add(option)
+                    }
+
+                    var optionValues = [];
+                    $('#size' + productId + ' option').each(function () {
+                        if ($.inArray(this.value, optionValues) > -1) {
+                            $(this).remove()
+                        } else {
+                            optionValues.push(this.value);
+                        }
+                    });
+
+
+                }
+            };
+            ajax.open("get", "/showsize?productId=" + productId, true);
+
+            ajax.send()
+        }
+    </script>
+
+    <script type="text/javascript">
+
+        function showcolor(productId) {
+
+            var ajax = new XMLHttpRequest();
+
+            ajax.onreadystatechange = function () {
+
+                if (ajax.readyState == 4) {
+
+                    var jsn = JSON.parse(ajax.responseText);
+
+
+                    var select = document.getElementById('color' + productId);
+                    for (x in jsn['color']) {
+
+                        var option = document.createElement("option");
+                        option.text = x;
+                        option.value = x;
+                        select.add(option)
+                    }
+
+                    var optionValues = [];
+                    $('#color' + productId + ' option').each(function () {
+                        if ($.inArray(this.value, optionValues) > -1) {
+                            $(this).remove()
+                        } else {
+                            optionValues.push(this.value);
+                        }
+                    });
+
+
+                }
+            };
+            ajax.open("get", "/showcolor?productId=" + productId, true);
+
+            ajax.send()
+        }
+    </script>
+
+    <script type="text/javascript">
+
+        function changecolor(color, productId) {
+
+            var ajax = new XMLHttpRequest();
+
+            ajax.onreadystatechange = function () {
+
+                if (ajax.readyState == 4) {
+
+                    var jsn = JSON.parse(ajax.responseText);
+
+
+                }
+            };
+            ajax.open("get", "/changecolor?productId=" + productId + "&color=" + color, true);
+
+            ajax.send()
+        }
+    </script>
+
+    <script type="text/javascript">
+
+        function changesize(size, productId) {
+
+            var ajax = new XMLHttpRequest();
+
+            ajax.onreadystatechange = function () {
+
+                if (ajax.readyState == 4) {
+
+                    var jsn = JSON.parse(ajax.responseText);
+
+
+                }
+            };
+            ajax.open("get", "/changesize?productId=" + productId + "&size=" + size, true);
+
+            ajax.send()
+        }
+    </script>
+
+
+    {#    <style>#}
+    {#        .parallax1 {#}
+    {#            background-image: url("{% static '/userResources/jpg/bg-parallax1.jpg' %}");#}
+    {#        }#}
+    {##}
+    {#    </style>#}
+
+    <style>
+        table {
+        {#            font-family: arial, sans-serif;#} border-collapse: collapse;
+            width: 100%;
+            border: 0px solid white;
+        }
+
+        th {
+            border: 1px solid white;
+            text-align: center;
+            font-weight: bold;
+            padding: 10px;
+        }
+
+        td {
+            border: 1px solid white;
+            text-align: center;
+            padding: 12px;
+        }
+
+        tr:nth-child(even) {
+            background-color: hsla(0, 10%, 90%, 0.3);;
+        }
+    </style>
+
+
+    <div class="total_area" style="padding-top: 30px;">
+        <div style="background-color: hsla(0, 10%, 70%, 0.3); margin-bottom: 15px;">
+            <center>
+                <div class="page-title-heading">
+                    <h1 class="title">Cart</h1>
+                </div><!-- /.page-title-heading -->
+                <div class="breadcrumbs" style="margin-top: 20px;">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/viewCart">Cart</a></li>
+                    </ul>
+                </div>
+            </center>
+        </div>
+    </div>
+
+
+    {#    <div class="page-title parallax parallax1" style="background-position: 50% 89px;">#}
+    {#        <div class="container">#}
+    {#            <div class="row">#}
+    {#                <div class="col-md-12">#}
+    {#                    <div class="page-title-heading" style="background-color:  hsla(0, 10%, 70%, 0.3);">#}
+    {#                        <h1 class="title">Cart</h1>#}
+    {#                    </div><!-- /.page-title-heading -->#}
+    {#                    <div class="breadcrumbs">#}
+    {#                        <ul>#}
+    {#                            <li><a href="/">Home</a></li>#}
+    {#                            <li><a href="/viewCart">Cart</a></li>#}
+    {#                        </ul>#}
+    {#                    </div><!-- /.breadcrumbs -->#}
+    {#                </div><!-- /.col-md-12 -->#}
+    {#            </div><!-- /.row -->#}
+    {#        </div><!-- /.container -->#}
+    {#    </div>#}
+    <form action="/checkout" method="post">
+        <section id="cart_items">
+            <div class="container">
+
+                <p style="color: red"> {% if messages %}
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                {% endif %}</p>
+                {% if orderListDict %}
+                    <div class="table-responsive cart_info" style="padding-top: 30px;">
+                        <table class="table table-condensed">
+                            <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Item Name</th>
+                                <th>Price ($)</th>
+                                <th>Quantity</th>
+                                <th>Color</th>
+                                <th>Size</th>
+                                <th>Total ($)</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            {% for key,value in orderListDict.items %}
+                                <tbody id="deleteId{{ key }}">
+                                {% csrf_token %}
+
+                                <tr>
+                                    <td>
+                                        {% load custome_tags %}
+                                        {% listConverter value.image as images %}
+                                        <a href="/loadProductdesc?id={{ value.id }}" target="_blank"><img
+                                                src="/media/{{ images.0 }}.jpeg" alt=""
+                                                style="width: 100px;height: 100px"></a>
+                                    </td>
+
+                                    <td style="padding-top: 40px;">
+                                        <h4><a href="">{{ value.name }}</a></h4>
+                                        <p>{{ value.desc }}</p>
+                                    </td>
+
+                                    <td style="padding-top: 40px;">
+                                        <p id="price"> {{ value.price }}</p>
+                                    </td>
+
+
+                                    <td style="padding-top: 40px;">
+                                        <div>
+
+                                            <input type="number" name="Quantity" id="quantity{{ key }}"
+                                                   value="{{ value.quantity }}"
+                                                   onchange="totalAmount({{ key }})">
+                                        </div>
+                                    </td>
+
+                                    <td style="padding-top: 40px;">
+                                        {% if 'color' in value %}
+                                            <select id='color{{ key }}' name="color" onclick="showcolor({{ key }})"
+                                                    onchange="changecolor(this.value,{{ key }})">
+                                                <option value={{ value.color }}>{{ value.color }}</option>
+                                            </select>
+                                        {% else %}
+                                            <select id='color{{ key }}' name="color" onclick="showcolor({{ key }})"
+                                                    onchange="changecolor(this.value,{{ key }})" required>
+                                                <option value="" hidden>Select color</option>
+                                            </select>
+                                        {% endif %}
+
+                                    </td>
+
+                                    <td style="padding-top: 40px;">
+                                        {% if 'size' in value %}
+                                            <select id='size{{ key }}' name="size" onclick="showsize({{ key }})"
+                                                    onchange="changesize(this.value,{{ key }})">
+                                                <option value={{ value.size }}>{{ value.size }}</option>
+                                            </select>
+                                        {% else %}
+                                            <select id='size{{ key }}' name="size" onclick="showsize({{ key }})"
+                                                    onchange="changesize(this.value,{{ key }})" required>
+                                                <option value="" hidden>Select Size</option>
+                                            </select>
+                                        {% endif %}
+                                    </td>
+
+
+                                    <td style="padding-top: 40px;">
+                                        <p id="totalPrice{{ key }}">
+                                            {{ value.totalprice }}</p>
+                                    </td>
+
+                                    <td style="padding-top: 40px;">
+                                        <a onclick="deleteOrder({{ key }})"><i
+                                                class="fa fa-times"></i></a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            {% endfor %}
+                        </table>
+                    </div>
+                {% endif %}
+            </div>
+        </section> <!--/#cart_items-->
+        {% if orderListDict %}
+            <section id="do_action">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12" style="width: 100%">
+                            <div class="total_area" style="padding-bottom: 50px; padding-top: 10px;">
+                                <div style="background-color: hsla(0, 10%, 70%, 0.3); margin-bottom: 15px;">
+                                    <center>
+                                        <ul style="font-size: 15px;">
+                                            <b>
+                                                <li>Total ($) &nbsp;&nbsp;&nbsp; <span
+                                                        id="totalOrderAmount">{{ orderList.totalPrice }}</span>
+                                                </li>
+                                            </b>
+                                        </ul>
+                                    </center>
+                                </div>
+                                <center>
+
+                                    <a href="/checkout">
+                                        <button class="btn btn-default" style="margin-right: 10px; margin-bottom: 30px;"
+                                                type="submit">Check Out
+                                        </button>
+                                    </a>
+
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section><!--/#do_action-->
+        {% endif %}
+    </form>
+{% endblock %}
+
+
+
+{% block js %}
+
+    <script>
+
+        jQuery(document).ready(function () {
+            // This button will increment the value
+            $('.qtyplus').click(function (e) {
+                // Stop acting like a button
+                e.preventDefault();
+                // Get the field name
+                fieldName = $(this).attr('field');
+                // Get its current value
+                var currentVal = parseInt($('input[id=' + fieldName + ']').val());
+                // If is not undefined
+                if (!isNaN(currentVal)) {
+                    // Increment
+                    $('input[id=' + fieldName + ']').val(currentVal + 1);
+                } else {
+                    // Otherwise put a 0 there
+                    $('input[id=' + fieldName + ']').val(0);
+                }
+            });
+            // This button will decrement the value till 0
+            $(".qtyminus").click(function (e) {
+                // Stop acting like a button
+                e.preventDefault();
+                // Get the field name
+                fieldName = $(this).attr('field');
+                // Get its current value
+                var currentVal = parseInt($('input[id=' + fieldName + ']').val());
+                // If it isn't undefined or its greater than 0
+                if (!isNaN(currentVal) && currentVal > 0) {
+                    // Decrement one
+                    $('input[id=' + fieldName + ']').val(currentVal - 1);
+                } else {
+                    // Otherwise put a 0 there
+                    $('input[id=' + fieldName + ']').val(0);
+                }
+            });
+        });
+
+
+    </script>
+
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'admin/base.html' %}
+{% load static %}
+
+{% block content %}}
+
+    <div class="am-pagetitle">
+        <h5 class="am-title ">View Dataset</h5>
+
+    </div><!-- am-pagetitle -->
+
+    <div class="am-mainpanel">
+        <div class="am-pagebody">
+
+            <div class="card pd-20 pd-sm-40">
+                <h6 class="card-body-title mg-sm-b-30">View Dataset</h6>
+
+                <div class="table-wrapper">
+                    <table id="datatable1" class="table display responsive nowrap">
+                        <thead>
+                        <tr>
+                            <th>product name</th>
+                            <th>imaged</th>
+                            <th>category</th>
+                            <th>subcategory</th>
+                            <th>type</th>
+                            <th>description</th>
+                            <th>price</th>
+                            <th>size</th>
+                            <th>publish Date</th>
+                            <th>action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for i in viewProduct %}
+                        <tr>
+                            <td>{{ i.product_name }}</td>
+                            <td><a target="_blank" href="/media/{{ i.image }}">show {{ i.product_name }}</a></td>
+                            <td>{{ i.category }}</td>
+                            <td>{{ i.subcategory }}</td>
+                            <td>{{ i.type }}</td>
+                            <td>{{ i.desc }}</td>
+                            <td>{{ i.price }}</td>
+                            <td>{{ i.size }}</td>
+                            <td>{{ i.pub_date }}</td>
+                            <td><a>Edit</a>&nbsp;&nbsp;<a>Delete</a></td>
+
+
+                        </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div><!-- table-wrapper -->
+            </div><!-- card -->
+
+        </div><!-- am-pagebody -->
+{% endblock %}

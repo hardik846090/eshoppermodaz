@@ -1,0 +1,355 @@
+{% extends 'admin/base.html' %}
+{% load static %}
+{% block content %}
+    <style>
+        .dot {
+            height: 18px;
+            width: 18px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+    </style>
+
+
+    <script type="text/javascript">
+
+        function deleteImage(imageName, productId) {
+
+            var ajax = new XMLHttpRequest();
+
+            ajax.onreadystatechange = function () {
+
+                if (ajax.readyState == 4) {
+
+                    var jsn = JSON.parse(ajax.responseText);
+                    var img = jsn['imageName']
+
+                    document.getElementById(img).remove();
+
+
+                }
+            };
+            ajax.open("get", "/admin/deleteImage?imageName=" + imageName + "&productId=" + productId, true);
+
+            ajax.send()
+        }
+    </script>
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="content-page">
+        <!-- Start content -->
+        <div class="content">
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box">
+                            <h4 class="page-title float-left">Add Product</h4>
+
+                            <ol class="breadcrumb float-right">
+                                <a href="/admin/viewProduct">
+                                    <button class="btn btn-primary waves-effect waves-light" type="submit">
+                                        view Product
+                                    </button>
+                                </a>
+                            </ol>
+
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+
+
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <div class="card-box">
+                            <p class="text-muted font-14 m-b-20">
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        {{ message }}
+                                    {% endfor %}
+                                {% endif %}
+                            </p>
+
+                            <form action="/admin/updateProduct" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <input type="text" name="id" hidden value="{{ editProduct.id }}">
+                                <input type="text" name="navigate" hidden value="{{ navigate }}">
+                                <div class="form-group">
+                                    <label for="userName">code<span class="text-danger">*</span></label>
+                                    <input type="text" name="code" parsley-trigger="change" required
+                                           placeholder="Enter Code" class="form-control" id="userName"
+                                           value="{{ editProduct.code }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="emailAddress">Name<span class="text-danger">*</span></label>
+                                    <input type="text" name="name" parsley-trigger="change" required
+                                           placeholder="Enter name" class="form-control" id="emailAddress"
+                                           value="{{ editProduct.name }}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="mobileNumber">Image<span class="text-danger">*</span></label>
+                                    <p><input type="file" accept="image/*" name="image" id="file"
+                                              onchange="loadFile(event)"
+                                              style="display: none;" multiple></p>
+                                    <p><label for="file" style="cursor: pointer;">Upload Image (Click here)</label></p>
+                                    <p><img id="output" style="width: 100px;height: 100px"/>
+                                    </p>
+
+
+                                    {% if editProduct.image %}
+                                        {% load custome_tags %}
+                                        {% listConverter editProduct.image as images %}
+                                        {% for img in images %}
+                                            <p id="{{ img }}"><img style="width: 100px;height: 100px"
+
+                                                                   src="/media/{{ img }}.jpeg"
+                                            /><a onclick="deleteImage('{{ img }}',{{ editProduct.id }})"><input
+                                                    type="button" value="Delete"></a>
+                                            </p>
+                                        {% endfor %}{% endif %}
+                                </div>
+                                <div class="form-group">
+                                    <label for="mobileNumber">Category<span class="text-danger">*</span></label>
+                                    <input type="text" name="category" parsley-trigger="change" required
+                                           placeholder="Enter category" class="form-control" id="mobileNumber"
+                                           value="{{ editProduct.category }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="userName">Subcategory<span class="text-danger">*</span></label>
+                                    <input type="text" name="subcategory" parsley-trigger="change" required
+                                           placeholder="Enter subcategory" class="form-control" id="userName"
+                                           value="{{ editProduct.subcategory }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="userName">Type<span class="text-danger">*</span></label>
+                                    <input type="text" name="type" parsley-trigger="change" required
+                                           placeholder="Enter type" class="form-control" id="userName"
+                                           value="{{ editProduct.type }}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="userName">Color<span class="text-danger">*</span></label>
+                                    {#                                    <!--<input type="text" name="color" parsley-trigger="change" required#}
+                                    {#                                           placeholder="Enter color" class="form-control" id="userName"#}
+                                    {#                                           value="{{ editProduct.color }}">-->#}
+                                    {#                                    {% load custome_tags %}#}
+                                    {#                                    {% listConverter editProduct.color as colorList %}#}
+                                    <div class="checkbox">
+                                        {% load custome_tags %}
+                                        {% listConverter editProduct.color as colorList %}
+
+                                        <input id="black" type="checkbox" name="color" value="black"
+                                               {% if 'black' in colorList %}checked{% endif %}>
+                                        <label for="black" class="dot" style="background-color: black"></label>
+                                        &nbsp;&nbsp;&nbsp;
+
+                                        <input id="green" type="checkbox" name="color" value="green"
+                                               {% if 'green' in colorList %}checked{% endif %}>
+                                        <label for="green" class="dot" style="background-color: green"></label>
+                                        &nbsp;&nbsp;&nbsp;
+
+                                        <input id="red" type="checkbox" name="color" value="red"
+                                               {% if 'red' in colorList %}checked{% endif %}>
+                                        <label for="#9B59B6" class="dot" style="background-color: red"></label>
+                                        &nbsp;&nbsp;
+
+                                        <input id="white" type="checkbox" name="color" value="white"
+                                               {% if 'white' in colorList %}checked{% endif %}>
+                                        <label for="white" class="dot" style="background-color: white"></label>
+                                        &nbsp;&nbsp;&nbsp;
+
+                                        <input id="orange" type="checkbox" name="color" value="orange"
+                                               {% if 'orange' in colorList %}checked{% endif %}>
+                                        <label for="orange" class="dot" style="background-color: orange"></label>
+                                        &nbsp;&nbsp;&nbsp;
+
+                                        <input id="blue" type="checkbox" name="color" value="blue"
+                                               {% if 'blue' in colorList %}checked{% endif %}>
+                                        <label for="blue" class="dot" style="background-color: blue"></label>
+                                        &nbsp;&nbsp;&nbsp;
+
+                                        <input id="violet" type="checkbox" name="color" value="violet"
+                                               {% if 'violet' in colorList %}checked{% endif %}>
+                                        <label for="violet" class="dot" style="background-color: violet"></label>
+                                        &nbsp;&nbsp;&nbsp;
+
+                                        <input id="yellow" type="checkbox" name="color" value="yellow"
+                                               {% if 'yellow' in colorList %}checked{% endif %}>
+                                        <label for="yellow" class="dot" style="background-color: yellow"></label>
+                                        &nbsp;&nbsp;&nbsp;
+
+                                        <input id="pink" type="checkbox" name="color" value="pink"
+                                               {% if 'pink' in colorList %}checked{% endif %}>
+                                        <label for="pink" class="dot" style="background-color: pink"></label>
+                                        &nbsp;&nbsp;&nbsp;
+
+                                        <input id="grey" type="checkbox" name="color" value="grey"
+                                               {% if 'grey' in colorList %}checked{% endif %}>
+                                        <label for="grey" class="dot" style="background-color: grey"></label>
+                                        &nbsp;&nbsp;&nbsp;
+
+                                        <input id="gold" type="checkbox" name="color" value="gold"
+                                               {% if 'gold' in colorList %}checked{% endif %}>
+                                        <label for="gold" class="dot" style="background-color: gold"></label>
+                                        &nbsp;&nbsp;&nbsp;
+
+{#                                        <input id="#F39C12" type="checkbox" name="color" value="#F39C12"#}
+{#                                               {% if '#F39C12' in colorList %}checked{% endif %}>#}
+{#                                        <label for="#F39C12" class="dot" style="background-color: #F39C12"></label>#}
+{#                                        &nbsp;&nbsp;&nbsp;#}
+{##}
+{#                                        <input id="#E67E22" type="checkbox" name="color" value="#E67E22"#}
+{#                                               {% if '#E67E22' in colorList %}checked{% endif %}>#}
+{#                                        <label for="#E67E22" class="dot" style="background-color: #E67E22"></label>#}
+{#                                        &nbsp;&nbsp;&nbsp;#}
+{##}
+{#                                        <input id="#D35400" type="checkbox" name="color" value="#D35400"#}
+{#                                               {% if '#D35400' in colorList %}checked{% endif %}>#}
+{#                                        <label for="#D35400" class="dot" style="background-color: #D35400"></label>#}
+{#                                        &nbsp;&nbsp;&nbsp;#}
+{##}
+{#                                        <input id="#ECF0F1 " type="checkbox" name="color" value="#ECF0F1 "#}
+{#                                               {% if '#ECF0F1' in colorList %}checked{% endif %}>#}
+{#                                        <label for="#ECF0F1 " class="dot"#}
+{#                                               style="background-color: #ECF0F1 "></label>#}
+{#                                        &nbsp;&nbsp;&nbsp;#}
+{##}
+{#                                        <input id="#BDC3C7" type="checkbox" name="color" value="#BDC3C7"#}
+{#                                               {% if '#BDC3C7' in colorList %}checked{% endif %}>#}
+{#                                        <label for="#BDC3C7" class="dot" style="background-color: #BDC3C7"></label>#}
+{#                                        &nbsp;&nbsp;&nbsp;#}
+{##}
+{#                                        <input id="#95A5A6" type="checkbox" name="color" value="#95A5A6"#}
+{#                                               {% if '#95A5A6' in colorList %}checked{% endif %}>#}
+{#                                        <label for="#95A5A6" class="dot" style="background-color: #95A5A6"></label>#}
+{#                                        &nbsp;&nbsp;&nbsp;#}
+{##}
+{#                                        <input id="#7F8C8D" type="checkbox" name="color" value="#7F8C8D"#}
+{#                                               {% if '#7F8C8D' in colorList %}checked{% endif %}>#}
+{#                                        <label for="#7F8C8D" class="dot" style="background-color: #7F8C8D"></label>#}
+{#                                        &nbsp;&nbsp;&nbsp;#}
+{##}
+{#                                        <input id="#34495E " type="checkbox" name="color" value="#34495E "#}
+{#                                               {% if '#34495E' in colorList %}checked{% endif %}>#}
+{#                                        <label for="#34495E " class="dot"#}
+{#                                               style="background-color: #34495E "></label>#}
+{#                                        &nbsp;&nbsp;&nbsp;#}
+{##}
+{#                                        <input id="#2C3E50" type="checkbox" name="color" value="#2C3E50"#}
+{#                                               {% if '#2C3E50' in colorList %}checked{% endif %}>#}
+{#                                        <label for="#2C3E50" class="dot" style="background-color: #2C3E50"></label>#}
+{#                                        &nbsp;&nbsp;&nbsp;#}
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="userName">Description<span class="text-danger">*</span></label>
+                                    <input type="text" name="desc" parsley-trigger="change" required
+                                           placeholder="Enter description" class="form-control" id="userName"
+                                           value="{{ editProduct.desc }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="userName">Size<span class="text-danger">*</span></label>
+{#                                    <!--<input type="text" name="size" parsley-trigger="change" required#}
+{#                                           placeholder="Enter size" class="form-control" id="userName"#}
+{#                                           value="{{ editProduct.size }}">-->#}
+                                    <div class="checkbox">
+                                        {% load custome_tags %}
+                                        {% listConverter editProduct.size as sizeList %}
+                                        <input id="xs" type="checkbox" name="size" value="XS"
+                                               {% if 'XS'  in sizeList %}checked{% endif %}>
+                                        <label for="xs">
+                                            XS
+                                        </label>
+                                        <input id="s" type="checkbox" name="size" value="S"
+                                               {% if 'S' in sizeList %}checked{% endif %}>
+                                        <label for="s">
+                                            S
+                                        </label>
+                                        <input id="m" type="checkbox" name="size" value="M"
+                                               {% if 'M' in sizeList %}checked{% endif %}>
+                                        <label for="m">
+                                            M
+                                        </label>
+                                        <input id="l" type="checkbox" name="size" value="L"
+                                               {% if 'L' in sizeList %}checked{% endif %}>
+                                        <label for="l">
+                                            L
+                                        </label>
+                                        <input id="xl" type="checkbox" name="size" value="XL"
+                                               {% if 'XL' in sizeList %}checked{% endif %}>
+                                        <label for="xl">
+                                            XL
+                                        </label>
+                                        <input id="2xl" type="checkbox" name="size" value="2XL"
+                                               {% if '2XL' in sizeList %}checked{% endif %}>
+                                        <label for="2xl">
+                                            2XL
+                                        </label>
+                                        <input id="3xl" type="checkbox" name="size" value="3XL"
+                                               {% if '3XL' in sizeList %}checked{% endif %}>
+                                        <label for="3xl">
+                                            3XL
+                                        </label>
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="userName">Price<span class="text-danger">*</span></label>
+                                    <input type="number" name="price" parsley-trigger="change" required
+                                           placeholder="Enter price" class="form-control" id="userName"
+                                           value="{{ editProduct.price }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="userName">Quantity<span class="text-danger">*</span></label>
+                                    <input type="text" name="quantity" parsley-trigger="change" required
+                                           placeholder="Enter quantity" class="form-control" id="userName"
+                                           value="{{ editProduct.quantity }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="userName">Promocode<span class="text-danger">*</span></label>
+                                    <input type="text" name="promocode" parsley-trigger="change"
+                                           placeholder="Enter promocode" class="form-control" id="userName"
+                                           value="{{ editProduct.promocode }}">
+                                </div>
+
+                                <div class="form-group text-right m-b-0">
+                                    <button class="btn btn-primary waves-effect waves-light" type="submit">
+                                        Submit
+                                    </button>
+                                    <button type="reset" class="btn btn-secondary waves-effect m-l-5">
+                                        Cancel
+                                    </button>
+                                </div>
+
+                            </form>
+
+                        </div> <!-- end card-box -->
+                    </div>
+                    <!-- end col -->
+
+                </div>
+                <!-- end row -->
+
+
+            </div> <!-- container -->
+
+        </div> <!-- content -->
+
+        <footer class="footer text-right">
+            2017 - 2018 © Peer2Peer. - Coderthemes.com
+        </footer>
+
+    </div>
+
+
+    <!-- ============================================================== -->
+    <!-- End Right content here -->
+    <!-- ============================================================== -->
+{% endblock %}
+

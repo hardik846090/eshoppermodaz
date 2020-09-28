@@ -1,0 +1,57 @@
+{% extends 'user/base.html' %}
+
+{% load static %}
+
+{% block title %}Add Complain Page{% endblock %}
+
+{% block content %}
+
+    <div class="total_area" style="padding-top: 30px;">
+        <div style="background-color: hsla(0, 10%, 70%, 0.3); margin-bottom: 15px;">
+            <center>
+                <div class="page-title-heading">
+                    <h1 class="title">Add Complain</h1>
+                </div><!-- /.page-title-heading -->
+                <div class="breadcrumbs" style="margin-top: 20px;">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/loadComplain">Add Complain</a></li>
+                    </ul>
+                </div>
+            </center>
+        </div>
+    </div>
+
+
+    <section id="cart_items" style="margin-top: 20px;">
+        <center>
+            <div class="container">
+                <div class="shopper-informations">
+                    <center>
+                        <div class="row">
+                            <div class="col-sm-8 clearfix" style="width: 80%; padding-left: 350px;">
+
+                                <div class="bill-to">
+                                    <div class="form-one" style="width: 100%">
+                                        <form method="post" action="/insertComplain">
+                                            {% csrf_token %}
+                                            <input type="text" name="subject" placeholder="subject *" required>
+                                            <textarea type="text" name="description" placeholder="description *"
+                                                      required></textarea>
+                                            <button type="submit" class="btn btn-default"
+                                                    style="margin-top: 10px; margin-bottom: 30px;">Submit
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </center>
+                </div>
+            </div>
+        </center>
+    </section>
+
+    <br>
+
+{% endblock %}

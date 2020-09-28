@@ -1,0 +1,80 @@
+{% extends 'user/base.html' %}
+
+{% load static %}
+
+{% block title %}Add Feedback page{% endblock %}
+
+{% block content %}
+
+    <div class="total_area" style="padding-top: 30px;">
+        <div style="background-color: hsla(0, 10%, 70%, 0.3); margin-bottom: 15px;">
+            <center>
+                <div class="page-title-heading">
+                    <h1 class="title">Add Feedback</h1>
+                </div><!-- /.page-title-heading -->
+                <div class="breadcrumbs" style="margin-top: 20px;">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/loadFeedback">Add Feedback</a></li>
+                    </ul>
+                </div>
+            </center>
+        </div>
+    </div>
+
+
+    <section id="cart_items" style="margin-top: 20px;">
+        <center>
+            <div class="container">
+                <div class="shopper-informations">
+                    <center>
+                        <div class="row">
+                            <div class="col-sm-8 clearfix" style="width: 80%; padding-left: 350px;">
+
+                                <div class="bill-to">
+                                    <div class="form-one" style="width: 100%">
+                                        <form method="post" action="/insertFeedback">
+                                            {% csrf_token %}
+                                            <input type="text" hidden name="productId" value="{{ productId }}">
+                                            <input type="text" hidden name="orderId" value="{{ orderId }}">
+                                            <label>Rating</label>
+                                            <fieldset class="rating">
+                                                <input type="radio" id="star5" name="feedbackRating" value="5"/>
+                                                <label class="full" for="star5" title="Awesome-5 stars"></label>
+
+                                                <input type="radio" id="star4" name="feedbackRating" value="4"/>
+                                                <label class="full" for="star4" title="Pretty good-4 stars"></label>
+
+
+                                                <input type="radio" id="star3" name="feedbackRating" value="3"/>
+                                                <label class="full" for="star3" title="Meh-3 stars"></label>
+
+                                                <input type="radio" id="star2" name="feedbackRating" value="2"/>
+                                                <label class="full" for="star2" title="Kinda bad-2 stars"></label>
+
+
+                                                <input type="radio" id="star1" name="feedbackRating" value="1"/>
+                                                <label class="full" for="star1" title="Sucks big time-1 star"></label>
+
+
+                                            </fieldset>
+                                            <textarea type="text" name="description" placeholder="description *"
+                                                      required></textarea>
+                                            <button type="submit" class="btn btn-default"
+                                                    style="margin-top: 10px; margin-bottom: 30px;">Submit
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </center>
+                </div>
+            </div>
+        </center>
+    </section>
+
+
+    <br>
+
+{% endblock %}

@@ -1,0 +1,548 @@
+{% extends 'user/base.html' %}
+
+{% load static %}
+
+{% block title %}Index Page{% endblock %}
+
+{% block content %}
+
+    <script type="text/javascript">
+
+        function insertOrder(id) {
+            {#            alert("orderId   " + orderId);#}
+            var id = id;
+            alert(id);
+            {#            alert("quantity   " + quantity);#}
+            {#            alert("item added");#}
+
+            var ajax = new XMLHttpRequest();
+
+            ajax.onreadystatechange = function () {
+
+                if (ajax.readyState == 4) {
+
+                    var jsn = JSON.parse(ajax.responseText);
+                    var loginRequire = jsn['loginRequire']
+                    if (loginRequire == 'loginRequire') {
+                        window.location.href = "http://127.0.0.1:8000/loadLogin";
+
+                    }
+                }
+            };
+            ajax.open("get", "/insertOrder?id=" + id, true);
+
+            ajax.send()
+        }
+    </script>
+
+
+    <script type="text/javascript">
+        function inserWishlist(id) {
+            var id = id;
+
+            var ajax = new XMLHttpRequest();
+
+            ajax.onreadystatechange = function () {
+
+                if (ajax.readyState == 4) {
+
+                    var jsn = JSON.parse(ajax.responseText);
+                    var loginRequire = jsn['loginRequire']
+                    if (loginRequire == 'loginRequire') {
+                        window.location.href = "http://127.0.0.1:8000/loadLogin";
+
+                    }
+
+                }
+            };
+            ajax.open("get", "/inserWishlist?id=" + id, true);
+
+            ajax.send()
+        }
+    </script>
+
+    <script type="text/javascript">
+        function insertProductdesc(id) {
+            {#                        alert("orderId   " + orderId);#}
+            var id = id;
+            alert(id)
+            {#                        alert("quantity   " + quantity);#}
+
+            var ajax = new XMLHttpRequest();
+
+            ajax.onreadystatechange = function () {
+
+                if (ajax.readyState == 4) {
+
+                    var jsn = JSON.parse(ajax.responseText);
+                    var loginRequire = jsn['loginRequire']
+                    if (loginRequire == 'loginRequire') {
+                        window.location.href = "http://127.0.0.1:8000/loadLogin";
+
+                    }
+
+                }
+            };
+            ajax.open("get", "/insertProductdesc?id=" + id, true);
+
+            ajax.send()
+        }
+    </script>
+
+    <style>
+
+        .half-background.style-1 {
+            background-image: url("{% static 'eshoppermodaz/userResources/modaz/jpg/bg-countdown-1-962x506.jpg' %}");
+        }
+
+        @media screen and (max-width: 610px) {
+            #section1 .product-content ul li {
+                width: 50%;
+            }
+        }
+
+    </style>
+    <!-- SLIDER -->
+    <div class="rev_slider_wrapper fullwidthbanner-container">
+        <div id="rev-slider2" class="rev_slider fullwidthabanner">
+            <ul>
+
+                <!-- Slide 1 -->
+                {% for i in bennerList %}
+                    <li data-transition="random">
+
+                        <!-- Main Image -->
+                        <img src="/media/{{ i.image }}" alt=""
+                             data-bgposition="center center"
+                             data-no-retina>
+
+                        <!-- Layers -->
+                        <div class="tp-caption tp-resizeme text-6e6 font-weight-500 letter-spacing-08"
+                             data-x="['left','left','left','center']" data-hoffset="['7','7','7','0']"
+                             data-y="['middle','middle','middle','middle']" data-voffset="['-122','-122','-122','-122']"
+                             data-fontsize="['18','18','18','18']"
+                             data-lineheight="['36','36','36','36']"
+                             data-width="full"
+                             data-height="none"
+                             data-whitespace="normal"
+                             data-transform_idle="o:1;"
+                             data-transform_in="y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;s:2000;e:Power4.easeInOut;"
+                             data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;s:1000;e:Power2.easeInOut;"
+                             data-mask_in="x:0px;y:[100%];"
+                             data-mask_out="x:inherit;y:inherit;"
+                             data-start="700"
+                             data-splitin="none"
+                             data-splitout="none"
+                             data-responsive_offset="on">
+                            In store & Online
+                        </div>
+
+                        <div class="tp-caption tp-resizeme text-333 font-weight-500 letter-spacing-3"
+                             data-x="['left','left','left','center']" data-hoffset="['7','7','7','0']"
+                             data-y="['middle','middle','middle','middle']" data-voffset="['-62','-62','-62','-62']"
+                             data-fontsize="['72','72','72','46']"
+                             data-lineheight="['80','80','80','50']"
+                             data-width="full"
+                             data-height="none"
+                             data-whitespace="normal"
+                             data-transform_idle="o:1;"
+                             data-transform_in="y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;s:2000;e:Power4.easeInOut;"
+                             data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;s:1000;e:Power2.easeInOut;"
+                             data-mask_in="x:0px;y:[100%];"
+                             data-mask_out="x:inherit;y:inherit;"
+                             data-start="1000"
+                             data-splitin="none"
+                             data-splitout="none"
+                             data-responsive_offset="on">
+                            BLACK FRIDAY
+                        </div>
+
+                        <div class="tp-caption tp-resizeme text-6e6 font-weight-300 "
+                             data-x="['left','left','left','center']" data-hoffset="['7','7','7','0']"
+                             data-y="['middle','middle','middle','middle']" data-voffset="['3','3','3','3']"
+                             data-fontsize="['20','20','20','20']"
+                             data-lineheight="['48','48','48','48']"
+                             data-width="full"
+                             data-height="none"
+                             data-whitespace="normal"
+                             data-transform_idle="o:1;"
+                             data-transform_in="y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;s:2000;e:Power4.easeInOut;"
+                             data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;s:1000;e:Power2.easeInOut;"
+                             data-mask_in="x:0px;y:[100%];"
+                             data-mask_out="x:inherit;y:inherit;"
+                             data-start="1000"
+                             data-splitin="none"
+                             data-splitout="none"
+                             data-responsive_offset="on">
+                            30% SALE OFF EVERYTHING
+                        </div>
+
+                        <div class="tp-caption"
+                             data-x="['left','left','left','center']" data-hoffset="['7','7','7','0']"
+                             data-y="['middle','middle','middle','middle']" data-voffset="['72','72','72','72']"
+                             data-width="full"
+                             data-height="none"
+                             data-whitespace="normal"
+                             data-transform_idle="o:1;"
+                             data-transform_in="y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;s:2000;e:Power4.easeInOut;"
+                             data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;s:1000;e:Power2.easeInOut;"
+                             data-mask_in="x:0px;y:[100%];"
+                             data-mask_out="x:inherit;y:inherit;"
+                             data-start="1000"
+                             data-splitin="none"
+                             data-splitout="none"
+                             data-responsive_offset="on">
+                            <a href="#"
+                               class="themesflat-button has-padding-36 bg-accent has-shadow"><span>SHOP NOW</span></a>
+                        </div>
+                    </li>
+                {% endfor %}
+                <!-- /End Slide 1 -->
+
+            </ul>
+        </div>
+    </div>
+    <!-- END SLIDER -->
+
+    <!-- IMAGE BOX -->
+    <section class="flat-row row-image-box">
+        <div class="container">
+            <div class="row gutter-10">
+                <div class="col-sm-6 col-md-4">
+                    <div class="flat-image-box style-1 data-effect div-h22 clearfix">
+                        <div class="item data-effect-item">
+                            <div class="inner">
+                                <div class="thumb">
+                                    <img src="{% static 'eshoppermodaz/userResources/modaz/jpg/imgbox-1-375x500.jpg' %}"
+                                         alt="Image">
+                                    <div class="elm-btn">
+                                        <a href="/filterProductType?subcategory=Topwear&category=Men&type=T Shirt"
+                                           class="themesflat-button bg-white width-150">For T-shirt’s</a>
+                                    </div>
+                                    <div class="overlay-effect bg-color-1"
+                                         style="display: block; left: 0px; top: -100%; transition: all 300ms ease 0s;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.col-md-4 -->
+                <div class="col-sm-6 col-md-4">
+                    <div class="flat-image-box style-1 row2 data-effect clearfix">
+                        <div class="item data-effect-item">
+                            <div class="inner">
+                                <div class="thumb">
+                                    <img src="{% static 'eshoppermodaz/userResources/modaz/jpg/imgbox-1-375x240.jpg' %}"
+                                         alt="Image">
+                                    <div class="elm-btn">
+                                        <a href="/filterProductType?subcategory=Topwear&category=Men&type= Shirts"
+                                           class="themesflat-button bg-white width-150">For Shirt's</a>
+                                    </div>
+                                    <div class="overlay-effect bg-color-1"
+                                         style="display: block; left: -100%; top: 0px; transition: all 300ms ease 0s;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item data-effect-item">
+                            <div class="inner">
+                                <div class="thumb">
+                                    <img src="{% static 'eshoppermodaz/userResources/modaz/jpg/imgbox-2-375x240.jpg' %}"
+                                         alt="Image">
+                                    <div class="elm-btn">
+                                        <a href="/filterProductType?subcategory=Bottomwear&category=Men&type=Jeans"
+                                           class="themesflat-button bg-white width-150">For Jeans's</a>
+                                    </div>
+                                    <div class="overlay-effect bg-color-1"
+                                         style="display: block; left: 0px; top: -100%; transition: all 300ms ease 0s;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.col-md-4 -->
+                <div class="col-sm-6 col-md-4">
+                    <div class="flat-image-box style-1 data-effect div-h20 clearfix">
+                        <div class="item data-effect-item">
+                            <div class="inner">
+                                <div class="thumb">
+                                    <img src="{% static 'eshoppermodaz/userResources/modaz/jpg/imgbox-2-375x500.jpg' %}"
+                                         alt="Image">
+                                    <div class="elm-btn">
+                                        <a href="/filterProductType?subcategory=Bottomwear&category=Men&type=Shorts"
+                                           class="themesflat-button bg-white width-150">For Short’s</a>
+                                    </div>
+                                    <div class="overlay-effect bg-color-1"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.col-md-4 -->
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+    </section>
+    <!-- END IMAGE BOX -->
+
+    <!-- Start Trendings -->
+    <section id="section1" class="flat-row row-best-sale" style="margin-bottom: -100px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="title-section margin-bottom-43">
+                        <h2 class="title">
+                            Trendings
+                        </h2>
+                    </div>
+                    <div class="product-content product-fivecolumn clearfix">
+                        <ul class="product style3">
+                            {% for i in trendingList %}
+                                <li class="product-item">
+                                    <div class="product-thumb clearfix">
+                                        {% load custome_tags %}
+                                        {% listConverter i.image as images %}
+                                        {#                                    <a href="/productdesc">#}
+                                        <a href="/loadProductdesc?id={{ i.id }}" target="_blank">
+                                            <img src="/media/{{ images.0 }}.jpeg" alt="/"
+                                                 style="width:150px; height:200px;">
+                                        </a>
+                                    </div>
+                                    <div class="product-info clearfix"
+                                         style="margin-top: 10px; margin-bottom: -40px;">
+                                        <span class="product-title">{{ i.name }}</span>
+                                        <p>{{ i.desc }}</p>
+                                        <div class="price">
+                                            <ins>
+                                                <span class="amount">$ {{ i.price }}</span>
+                                            </ins>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-default">
+                                            <a onclick="insertOrder({{ i.id }})">ADD TO CART</a>
+                                        </button>
+                                    </div>
+                                    <div class="like">
+                                        <a onclick="inserWishlist({{ i.id }})"><i class="fa fa-heart-o"></i></a>
+                                    </div>
+                                    {#                                    <a href="#" class="like"><i class="fa fa-heart-o"></i></a>#}
+                                </li>
+                            {% endfor %}
+                        </ul><!-- /.product -->
+                    </div><!-- /.product-content -->
+                </div>
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+    </section>
+    <!-- End Trendigns -->
+
+    <!-- Start New Arrival -->
+    <section class="flat-row row-best-sale" style="margin-bottom: -100px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="title-section margin-bottom-43">
+                        <h2 class="title">
+                            New Arrivals
+                        </h2>
+                    </div>
+                    <div class="product-content product-fivecolumn clearfix">
+                        <ul class="product style3">
+                            {% for i in newarrivalList %}
+                                <li class="product-item">
+                                    <div class="product-thumb clearfix">
+                                        {% load custome_tags %}
+                                        {% listConverter i.image as images %}
+                                        {#                                    <a href="/productdesc">#}
+                                        <a href="/loadProductdesc?id={{ i.id }}" target="_blank">
+                                            <img src="/media/{{ images.0 }}.jpeg" alt="/"
+                                                 style="width:150px; height:200px;">
+                                        </a>
+                                    </div>
+                                    <div class="product-info clearfix"
+                                         style="margin-top: 10px; margin-bottom: -40px;">
+                                        <span class="product-title">{{ i.name }}</span>
+                                        <p>{{ i.desc }}</p>
+                                        <div class="price">
+                                            <ins>
+                                                <span class="amount">$ {{ i.price }}</span>
+                                            </ins>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-default">
+                                            <a onclick="insertOrder({{ i.id }})">ADD TO CART</a>
+                                        </button>
+                                    </div>
+                                    <div class="like">
+                                        <a onclick="inserWishlist({{ i.id }})"><i class="fa fa-heart-o"></i></a>
+                                    </div>
+                                    {#                                    <a href="#" class="like"><i class="fa fa-heart-o"></i></a>#}
+                                </li>
+
+                            {% endfor %}
+                        </ul><!-- /.product -->
+                    </div><!-- /.product-content -->
+                </div>
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+    </section>
+    <!-- End New Arrival -->
+
+    <!-- PRODUCT -->
+    <section class="flat-row row-product-project shop-collection">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+
+
+                    <div class="divider h40"></div>
+                    <div class="product-content product-fourcolumn clearfix">
+                        {% for product, range, nSlides in allProds %}
+                            <h2 class="title text-center"
+                                style="padding-bottom: 20px; padding-top: 30px;">{{ product.0.type }}</h2>
+                            <ul class="product style2 isotope-product clearfix">
+                                {% for i in product %}
+                                    <li class="product-item kid woman">
+                                        <div class="product-thumb clearfix">
+                                            {% load custome_tags %}
+                                            {% listConverter i.image as images %}
+                                            {#                                    <a href="/productdesc">#}
+                                            <a href="/loadProductdesc?id={{ i.id }}" target="_blank">
+                                                <img src="/media/{{ images.0 }}.jpeg" alt="/"
+                                                     style="width:150px; height:200px;">
+                                            </a>
+                                        </div>
+                                        {#                                {{ i.id }}#}
+                                        <div class="product-info clearfix"
+                                             style="margin-top: 10px; margin-bottom: -40px;">
+                                            <span class="product-title">{{ i.name }}</span>
+                                            <p>{{ i.desc }}</p>
+                                            <div class="price">
+                                                <ins>
+                                                    <span class="amount">$ {{ i.price }}</span>
+                                                </ins>
+                                            </div>
+                                            {#                                    <ul class="flat-color-list width-14">#}
+                                            {#                                        <li>#}
+                                            {#                                            <a href="#" class="red"></a>#}
+                                            {#                                        </li>#}
+                                            {#                                        <li>#}
+                                            {#                                            <a href="#" class="blue"></a>#}
+                                            {#                                        </li>#}
+                                            {#                                        <li>#}
+                                            {#                                            <a href="#" class="black"></a>#}
+                                            {#                                        </li>#}
+                                            {#                                    </ul>#}
+                                        </div>
+                                        <div>
+                                            <button class="btn btn-default">
+                                                <a onclick="insertOrder({{ i.id }})">ADD TO CART</a>
+                                            </button>
+                                        </div>
+                                        <div class="like">
+                                            <a onclick="inserWishlist({{ i.id }})"><i class="fa fa-heart-o"></i></a>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- END PRODUCT -->
+
+    <!-- COUNTDOWN -->
+    <div class="flat-row row-countdown no-padding">
+        <div class="container-fluid">
+            <div class="row equal sm-equal-auto">
+                <div class="col-md-6 half-background style-1" style="height: 506px;">
+
+                </div>
+                <div class="col-md-6 bg-section bg-color-f5f" style="height: 506px;">
+                    <div class="flat-content-box clearfix" data-margin="0 0 0 8px" data-mobilemargin="0 0 0 0">
+                        <div class="flat-countdown-wrap text-center">
+                            <div class="inner">
+                                <div class="divider h120 clearfix"></div>
+                                <h2 class="heading font-size-40 line-height-48">Deal Of The Week</h2>
+                                <p class="desc font-size-18 font-weight-400 line-height-48">Special Discount Limited
+                                    Time
+                                    Only</p>
+                                <div class="divider h42 clearfix"></div>
+                                <div class="wrap-countdown no-margin-bottom">
+                                    <div class="countdown style-1"></div>
+                                </div>
+                                <div class="divider h120 clearfix"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END COUNTDOWN -->
+
+
+
+    <!-- ICON BOX -->
+    <section class="flat-row row-icon-box style-1 bg-section bg-color-f5f" style="margin-bottom: 60px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="flat-icon-box icon-left w55 circle bg-white style-1 clearfix">
+                        <div class="inner no-margin  flat-content-box " data-margin="0 0 0 0"
+                             data-mobilemargin="0 0 0 0">
+                            <div class="icon-wrap">
+                                <i class="fa fa-truck"></i>
+                            </div>
+                            <div class="text-wrap">
+                                <h5 class="heading letter-spacing--1"><a href="#">Free Shipping</a></h5>
+                                <p class="desc">Apply order over $99</p>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.col-md-3 -->
+                <div class="col-md-3">
+                    <div class="flat-icon-box icon-left w55 circle bg-white style-1 clearfix">
+                        <div class="inner flat-content-box" data-margin="0 0 0 7px" data-mobilemargin="0 0 0 0">
+                            <div class="icon-wrap">
+                                <i class="fa fa-money"></i>
+                            </div>
+                            <div class="text-wrap">
+                                <h5 class="heading letter-spacing--1"><a href="#">Cash On Delivery</a></h5>
+                                <p class="desc">Internet Trend To Repeat</p>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.col-md-3 -->
+                <div class="col-md-3">
+                    <div class="flat-icon-box icon-left w55 circle bg-white style-1 clearfix">
+                        <div class="inner flat-content-box" data-margin="0 0 0 46px" data-mobilemargin="0 0 0 0">
+                            <div class="icon-wrap">
+                                <i class="fa fa-gift"></i>
+                            </div>
+                            <div class="text-wrap">
+                                <h5 class="heading letter-spacing--1"><a href="#">Gift For All</a></h5>
+                                <p class="desc">Gift When Subscribe</p>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.col-md-3 -->
+                <div class="col-md-3">
+                    <div class="flat-icon-box icon-left w55 circle bg-white style-1 clearfix">
+                        <div class="inner flat-content-box" data-margin="0 0 0 62px" data-mobilemargin="0 0 0 0">
+                            <div class="icon-wrap">
+                                <i class="fa fa-clock-o"></i>
+                            </div>
+                            <div class="text-wrap">
+                                <h5 class="heading letter-spacing--1"><a href="#">Opening All Week</a></h5>
+                                <p class="desc">6.00 am - 17.00pm</p>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.col-md-3 -->
+            </div>
+        </div>
+    </section>
+    <!-- END ICON BOX -->
+
+{% endblock %}

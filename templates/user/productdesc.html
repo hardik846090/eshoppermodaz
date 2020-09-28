@@ -1,0 +1,372 @@
+{% extends 'user/base.html' %}
+
+{% load static %}
+
+{% block title %}Product Description Page{% endblock %}
+
+{% block content %}
+
+    <style>
+        .dot {
+            height: 18px;
+            width: 18px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+    </style>
+
+    <script type="text/javascript">
+
+        function deleteWishlist(id) {
+            {#            alert("orderId   " + orderId);#}
+            var id = id;
+            {#            alert("quantity   " + quantity);#}
+
+            var ajax = new XMLHttpRequest();
+
+            ajax.onreadystatechange = function () {
+
+                if (ajax.readyState == 4) {
+
+                    var jsn = JSON.parse(ajax.responseText);
+
+                    document.getElementById("deleteId" + id).remove();
+
+                }
+            };
+            ajax.open("get", "/deleteWishlist?id=" + id, true);
+
+            ajax.send()
+        }
+    </script>
+
+    <script type="text/javascript">
+
+        function insertOrder(id) {
+            {#            alert("orderId   " + orderId);#}
+            var id = id;
+            {#            alert("quantity   " + quantity);#}
+
+            var ajax = new XMLHttpRequest();
+
+            ajax.onreadystatechange = function () {
+
+                if (ajax.readyState == 4) {
+
+                    var jsn = JSON.parse(ajax.responseText);
+                    var loginRequire = jsn['loginRequire']
+                    if (loginRequire == 'loginRequire') {
+                        window.location.href = "http://127.0.0.1:8000/loadLogin";
+
+                    }
+                }
+            };
+            ajax.open("get", "/insertOrder?id=" + id, true);
+
+            ajax.send()
+        }
+    </script>
+
+
+    <script type="text/javascript">
+        function inserWishlist(id) {
+            {#            alert("orderId   " + orderId);#}
+            var id = id;
+            {#            alert("quantity   " + quantity);#}
+
+            var ajax = new XMLHttpRequest();
+
+            ajax.onreadystatechange = function () {
+
+                if (ajax.readyState == 4) {
+
+                    var jsn = JSON.parse(ajax.responseText);
+                    var loginRequire = jsn['loginRequire']
+                    if (loginRequire == 'loginRequire') {
+                        window.location.href = "http://127.0.0.1:8000/loadLogin";
+
+                    }
+
+                }
+            };
+            ajax.open("get", "/inserWishlist?id=" + id, true);
+
+            ajax.send()
+        }
+    </script>
+
+    <div class="total_area" style="padding-top: 30px;">
+        <div style="background-color: hsla(0, 10%, 70%, 0.3); margin-bottom: 15px;">
+            <center>
+                <div class="page-title-heading">
+                    <h1 class="title">Product Descriptions</h1>
+                </div><!-- /.page-title-heading -->
+                <div class="breadcrumbs" style="margin-top: 20px;">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/productdesc">Product Descriptions</a></li>
+                    </ul>
+                </div>
+            </center>
+        </div>
+    </div>
+
+    <!--  For Product Description -->
+
+    {#        <section id="cart_items">#}
+    {#            <div class="container">#}
+    {##}
+    {#                <div class="table-responsive cart_info">#}
+    {#                    <table class="table table-condensed">#}
+    {#                        <thead>#}
+    {#                        <tr>#}
+    {#                            <th>Item</th>#}
+    {#                            <th>Price</th>#}
+    {#                        </tr>#}
+    {#                        </thead>#}
+    {#                        <tbody id="deleteId{{ i.id }}">#}
+    {#                        <tr>#}
+    {#                            <td>#}
+    {#                                {% load custome_tags %}#}
+    {#                                {% listConverter getProduct.image as images %}#}
+    {#                                {% for i in images %}#}
+    {#                                    <img src="/media/{{ i }}.jpeg" alt=""#}
+    {#                                         style="width: 150px; height: 150px;">#}
+    {#                                {% endfor %}#}
+    {#                            </td>#}
+    {##}
+    {#                            <td>#}
+    {#                                {{ getProduct.price }}#}
+    {#                            </td>#}
+    {#                        </tr>#}
+    {##}
+    {#                        </tbody>#}
+    {#                        <tr>#}
+    {#                            <td class="image" colspan="2">Detail</td>#}
+    {#                        </tr>#}
+    {#                        <tbody id="deleteId{{ i.id }}">#}
+    {#                        <tr>#}
+    {#                            <td>#}
+    {#                                code :{{ getProduct.code }}<br>#}
+    {#                                name :{{ getProduct.name }}<br>#}
+    {#                                category :{{ getProduct.category }}<br>#}
+    {#                                sub category :{{ getProduct.subcategory }}<br>#}
+    {#                                type :{{ getProduct.type }}<br>#}
+    {#                                desc :{{ getProduct.desc }}<br>#}
+    {#                            </td>#}
+    {##}
+    {#                        </tr>#}
+    {##}
+    {#                        </tbody>#}
+    {##}
+    {#                        <tr class="cart_menu">#}
+    {#                            <td class="image">chose color and size</td>#}
+    {#                            <td></td>#}
+    {#                        </tr>#}
+    {#                        <tbody id="deleteId{{ i.id }}">#}
+    {#                        <form method="post" action="/insertOrder">#}
+    {#                            {% csrf_token %}#}
+    {#                            <tr>#}
+    {##}
+    {#                                <td>#}
+    {#                                <input name="id" value={{ getProduct.id }} hidden>#}
+    {#                                    {% load custome_tags %}#}
+    {#                                    {% listConverter getProduct.color as colors %}#}
+    {#                                    {% for i in colors %}#}
+    {#                                        <input id={{ i }} type="radio" name="color" value={{ i }}>#}
+    {#                                        <label for={{ i }} class="dot" style="background-color: {{ i }}"></label>#}
+    {#                                    {% endfor %}#}
+    {#                                </td>#}
+    {#                                <td>#}
+    {#                                    {% load custome_tags %}#}
+    {#                                    {% sizequantity getProduct.size getProduct.quantity as sizequantity %}#}
+    {#                                    {% for key,value in sizequantity.items %}#}
+    {#                                        {% if value != "0" %}#}
+    {#                                            <input id={{ key }} type="radio" name="size" value={{ key }}>#}
+    {#                                            <label for={{ key }}>{{ key }}</label>#}
+    {#                                        {% endif %}#}
+    {#                                    {% endfor %}#}
+    {#                                </td>#}
+    {#                            </tr>#}
+    {#                            <tr>#}
+    {#                                <td colspan="2" align="center">#}
+    {#                                    <button type="submit"> Add to cart</button>#}
+    {#                                </td>#}
+    {#                            </tr>#}
+    {#                        </form>#}
+    {##}
+    {#                        </tbody>#}
+    {#                    </table>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#        </section> <!--/#cart_items-->#}
+
+
+
+
+
+
+
+
+
+
+    <section style="padding-top: 20px; margin-left: 80px; margin-bottom: 60px;"><!--form-->
+        <div class="container">
+            {% if productdescList %}
+                {#                <p><>>>>>>>>>>>>>>>>>>>>>>>>>>>>>{{ productdescList.id }}</p>#}
+                <div class="row">
+
+                    <!---------------    Image     ------------->
+
+                    <div class="col-sm-5" style="height: 350px; width: 350px;">
+                        {% load custome_tags %}
+                        {% listConverter productdescList.image as images %}
+                        {#                        {% for i in images %}#}
+                        <img src="/media/{{ images.0 }}.jpeg" alt="/"
+                             style="width:350px; height:350px;">
+                        {#                        {% endfor %}#}
+                    </div>
+
+                    <!---------------    Product Description     --------------->
+
+                    <div class="col-sm-5">
+                        <h3>{{ productdescList.code }}</h3>
+                        <b><h3>{{ productdescList.name }}</h3></b>
+                        <p style="font-size: 25px;">{{ productdescList.category }}</p><br>
+                        <p>{{ productdescList.subcategory }}</p>
+                        <p>{{ productdescList.type }}</p>
+                        <h3>$ {{ productdescList.price }}</h3>
+                        <p>{{ productdescList.desc }}</p>
+                        <p>{{ productdescList.coupon }}</p>
+
+                        <b><p style="color: #00c853">inclusive all taxes</p></b><br>
+
+
+                        <!---------     Size    -------------->
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <h3>Select Size and Color</h3>
+                            </div>
+                            {#                            <div class="col-sm-4">#}
+                            <form method="post" action="/insertOrder">
+                                {% csrf_token %}
+                                <input name="id" value="{{ productdescList.id }}" hidden>
+
+                                {% load custome_tags %}
+                                {% listConverter productdescList.color as colors %}
+                                {% for color in colors %}
+                                    {#                                               {% if color in colors %}#}
+                                    <input id={{ color }} type="radio" name="color" value={{ color }} required>
+                                    <label for={{ color }} class="dot"
+                                           style="background-color: {{ color }}"></label>
+                                    {#                                               {% endif %}#}
+                                {% endfor %}
+
+                                {% load custome_tags %}
+                                {% sizequantity productdescList.size productdescList.quantity as sizequantity %}
+                                {% for key,value in sizequantity.items %}
+                                    {% if value != "0" %}
+                                        <input id={{ key }} type="radio" name="size" value={{ key }} required>
+                                        <label for={{ key }}>{{ key }}</label>
+                                    {% endif %}
+                                {% endfor %}
+
+
+                                <div class="row" style="margin-top: 20px;">
+                                    <div class="col-sm-5">
+                                        <button type="submit" class="btn btn-default">
+                                            <i class="fa fa-shopping-cart"
+                                               style="margin-right: 5px;"></i>
+                                            Add to Cart
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="row" style="margin-top: 20px;">
+                                <div class="col-sm-6">
+                                    <button type="submit" class="btn btn-default"
+                                            onclick="inserWishlist({{ productdescList.id }})"><i
+                                            class="fa fa-heart"
+                                            style="margin-right: 5px;"></i>
+                                        Add
+                                        to Wishlist
+                                    </button>
+                                </div>
+                            </div>
+
+
+                            {#                            </div>#}
+                        </div>
+
+
+                    </div>
+                </div>
+            {% else %}
+                <p style="color: red;text-align: center">No Product available</p>
+            {% endif %}
+        </div>
+    </section>
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-------------------    Color       ----------------->
+
+{#                        <div class="row" style="margin-top: 20px;">#}
+{#                            <div class="col-sm-4">#}
+{#                                <h3>Select Color</h3>#}
+{#                            </div>#}
+{#                            <div class="col-sm-4">#}
+{#                                <p style="font-size: 15px; font-weight: bold; color: red;">Color Chart &nbsp; <i#}
+{#                                        class="fa fa-angle-double-right"></i></p>#}
+{#                            </div>#}
+{#                        </div>#}
+
+{#                        <div class="row">#}
+{#                            <a href="" style="font-size: 15px; font-weight: bold; margin-left: 15px;">#}
+{#                                <div class="col-sm-1">{{ productdescList.color }}</div>#}
+{#                                <div class="col-sm-1">#}
+{#                                    {% load custome_tags %}#}
+{#                                    {% listConverter productdescList.color as colors %}#}
+{#                                    {% for color in colors %}#}
+{#                                        {% if color in colors %}#}
+{#                                            <span class="dot" style="background-color: {{ color }}"></span>#}
+{#                                        {% endif %}#}
+{#                                    {% endfor %}#}
+{#                                </div>#}
+{#                            </a>#}
+{#                            <a href="" style="font-size: 15px; font-weight: bold;">#}
+{#                                <div class="col-sm-1">Green</div>#}
+{#                            </a>#}
+{#                            <a href="" style="font-size: 15px; font-weight: bold;">#}
+{#                                <div class="col-sm-1">Black</div>#}
+{#                            </a>#}
+{#                            <a href="" style="font-size: 15px; font-weight: bold;">#}
+{#                                <div class="col-sm-1">White</div>#}
+{#                            </a>#}
+{#                            <a href="" style="font-size: 15px; font-weight: bold;">#}
+{#                                <div class="col-sm-1">Blue</div>#}
+{#                            </a>#}
+{#                            <a href="" style="font-size: 15px; font-weight: bold;">#}
+{#                                <div class="col-sm-1">Pink</div>#}
+{#                            </a>#}
+{#                        </div>#}

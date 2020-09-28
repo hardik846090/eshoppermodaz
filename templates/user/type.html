@@ -1,0 +1,296 @@
+{% extends 'user/base.html' %}
+
+{% load static %}
+
+{% for category,value in request.session.categoryData.items %}
+    {% for subcategory,value in value.items %}
+        {% for type,value in value.items %}
+            {% block title %}{{ category }} {{ type }}'s  Page{% endblock %}
+        {% endfor %}
+    {% endfor %}
+{% endfor %}
+
+{% block content %}
+
+    <script type="text/javascript">
+
+        function insertOrder(id) {
+            {#            alert("orderId   " + orderId);#}
+            var id = id;
+            alert(id);
+            {#            alert("quantity   " + quantity);#}
+            {#            alert("item added");#}
+
+            var ajax = new XMLHttpRequest();
+
+            ajax.onreadystatechange = function () {
+
+                if (ajax.readyState == 4) {
+
+                    var jsn = JSON.parse(ajax.responseText);
+                    var loginRequire = jsn['loginRequire']
+                    if (loginRequire == 'loginRequire') {
+                        window.location.href = "http://127.0.0.1:8000/loadLogin";
+
+                    }
+                }
+            };
+            ajax.open("get", "/insertOrder?id=" + id, true);
+
+            ajax.send()
+        }
+    </script>
+
+
+    <script type="text/javascript">
+        function inserWishlist(id) {
+            {#            alert("orderId   " + orderId);#}
+            var id = id;
+            {#            alert("quantity   " + quantity);#}
+
+            var ajax = new XMLHttpRequest();
+
+            ajax.onreadystatechange = function () {
+
+                if (ajax.readyState == 4) {
+
+                    var jsn = JSON.parse(ajax.responseText);
+                    var loginRequire = jsn['loginRequire']
+                    if (loginRequire == 'loginRequire') {
+                        window.location.href = "http://127.0.0.1:8000/loadLogin";
+
+                    }
+
+                }
+            };
+            ajax.open("get", "/inserWishlist?id=" + id, true);
+
+            ajax.send()
+        }
+    </script>
+
+    <script type="text/javascript">
+        function insertProductdesc(id) {
+            {#                        alert("orderId   " + orderId);#}
+            var id = id;
+            alert(id)
+            {#                        alert("quantity   " + quantity);#}
+
+            var ajax = new XMLHttpRequest();
+
+            ajax.onreadystatechange = function () {
+
+                if (ajax.readyState == 4) {
+
+                    var jsn = JSON.parse(ajax.responseText);
+                    var loginRequire = jsn['loginRequire']
+                    if (loginRequire == 'loginRequire') {
+                        window.location.href = "http://127.0.0.1:8000/loadLogin";
+
+                    }
+
+                }
+            };
+            ajax.open("get", "/insertProductdesc?id=" + id, true);
+
+            ajax.send()
+        }
+    </script>
+
+    <style>
+        .parallax1 {
+            background-image: url("{% static '/userResources/modaz/jpg/bg-parallax1.jpg' %}");
+        }
+
+    </style>
+
+
+
+    <div class="page-title parallax parallax1">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="page-title-heading">
+                        <h1 class="title">Mens</h1>
+                    </div><!-- /.page-title-heading -->
+                    <div class="breadcrumbs">
+                        <ul>{% if category %}
+                            <li><a href="/">{{ category }}</a></li>
+                        {% endif %}
+                            {% if subcategory %}
+                                <li>
+                                    <a href="/filterProductType?subcategory={{ subcategory }}&category={{ category }}">{{ subcategory }}</a>
+                                </li>
+                            {% endif %}
+                            {% if type %}
+                                <li>
+                                    <a href="/filterProductType?subcategory={{ subcategory }}&category={{ category }}&type={{ type }}">{{ type }}</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div><!-- /.breadcrumbs -->
+                </div><!-- /.col-md-12 -->
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+    </div><!-- /.page-title -->
+
+
+
+    <section class="flat-row main-shop shop-4col">
+        <div class="container">
+            {% if getProduct %}
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="filter-shop bottom_68 clearfix">
+                            <p class="showing-product">
+                                Showing 1–12 of 56 Products
+                            </p>
+                            <ul class="flat-filter-search">
+                                <li>
+                                    <a href="#" class="show-filter">Filters</a>
+                                </li>
+                                <li class="search-product"><a href="/search">Search</a></li>
+                            </ul>
+                        </div><!-- /.filte-shop -->
+                        <div class="box-filter slidebar-shop clearfix" style="display: none;">
+                            <div class="btn-close"><a href="#"><i class="fa fa-times"></i></a></div>
+                            <div class="widget widget-sort-by">
+                                <h5 class="widget-title">
+                                    Sort By
+                                </h5>
+                                <ul>
+                                    <li><a href="#" class="active">Default</a></li>
+                                    <li><a href="#">Popularity</a></li>
+                                    <li><a href="#">Average rating</a></li>
+                                    <li><a href="#">Newness</a></li>
+                                    <li><a href="#">Price: low to high</a></li>
+                                    <li><a href="#">Price: high to low</a></li>
+                                </ul>
+                            </div><!-- /.widget-sort-by -->
+                            <div class="widget widget-price">
+                                <h5 class="widget-title">Price</h5>
+                                <ul>
+                                    <li><a href="#" class="active">$0.00 - $50.00</a></li>
+                                    <li><a href="#">$50.00 - $100.00</a></li>
+                                    <li><a href="#">$100.00 - $150.00</a></li>
+                                    <li><a href="#">$150.00 - $200.00</a></li>
+                                    <li><a href="#">$200.00 - 250.00</a></li>
+                                    <li><a href="#">250.00+</a></li>
+                                </ul>
+                            </div><!-- /.widget -->
+                            <div class="widget widget-color">
+                                <h5 class="widget-title">
+                                    Colors
+                                </h5>
+                                <ul class="flat-color-list icon-left">
+                                    <li><a href="#" class="yellow"></a><span>Yellow</span></li>
+                                    <li><a href="#" class="pink"> </a><span>White</span></li>
+                                    <li><a href="#" class="red active"></a><span>Red</span></li>
+                                    <li><a href="#" class="black"></a><span>Black</span></li>
+                                    <li><a href="#" class="blue"></a><span>Green</span></li>
+                                    <li><a href="#" class="khaki"></a><span>Orange</span></li>
+                                </ul>
+                            </div><!-- /.widget-color -->
+                            <div class="widget widget-size">
+                                <h5 class="widget-title">Size</h5>
+                                <ul>
+                                    <li><a href="#">L</a></li>
+                                    <li><a href="#">M</a></li>
+                                    <li><a href="#">S</a></li>
+                                    <li><a href="#">XL</a></li>
+                                    <li><a href="#">XXL</a></li>
+                                    <li><a href="#">Over Size</a></li>
+                                </ul>
+                            </div><!-- /.widget -->
+                            <div class="widget widget_tag">
+                                <h5 class="widget-title">
+                                    Tags
+                                </h5>
+                                <div class="tag-list">
+                                    <a href="#">All products</a>
+                                    <a href="#" class="active">Bags</a>
+                                    <a href="#">Chair</a>
+                                    <a href="#">Decoration</a>
+                                    <a href="#">Fashion</a>
+                                    <a href="#">Tie</a>
+                                    <a href="#">Furniture</a>
+                                    <a href="#">Accesories</a>
+                                </div>
+                            </div><!-- /.widget -->
+                        </div><!-- /.box-filter -->
+                        <div class="shop-search clearfix" style="display: none;">
+                            <form role="search" method="get" class="search-form" action="#">
+                                <label>
+                                    <input type="search" class="search-field" placeholder="Searching …" value=""
+                                           name="s">
+                                </label>
+                            </form>
+                        </div><!-- /.top-serach -->
+
+
+                        {#                            <h2 class="title text-center"#}
+                        {#                                style="padding-bottom: 20px; padding-top: 30px;">{{ i.0.subcategory }}</h2>#}
+                        <div class="product-content product-fourcolumn clearfix">
+                            {% for i in getProduct %}
+                                <ul class="product style2">
+                                    <li class="product-item">
+                                        <div class="product-thumb clearfix">
+                                            {% load custome_tags %}
+                                            {% listConverter i.image as images %}
+                                            <a href="/loadProductdesc?id={{ i.id }}" target="_blank">
+                                                <img src="/media/{{ images.0 }}.jpeg" alt="/"
+                                                     style="width:150px; height:200px;">
+                                            </a>
+                                        </div>
+                                        <div class="product-info clearfix"
+                                             style="margin-top: 10px; margin-bottom: -40px;">
+                                            <span class="product-title">{{ i.name }}</span>
+                                            <p>{{ i.desc }}</p>
+                                            <div class="price">
+                                                <ins>
+                                                    <span class="amount">$ {{ i.price }}</span>
+                                                </ins>
+                                            </div>
+                                            {#                                        <ul class="flat-color-list">#}
+                                            {#                                            <li>#}
+                                            {#                                                <a href="#" class="red"></a>#}
+                                            {#                                            </li>#}
+                                            {#                                            <li>#}
+                                            {#                                                <a href="#" class="blue"></a>#}
+                                            {#                                            </li>#}
+                                            {#                                            <li>#}
+                                            {#                                                <a href="#" class="black"></a>#}
+                                            {#                                            </li>#}
+                                            {#                                        </ul>#}
+                                        </div>
+                                        <div>
+                                            <button class="btn btn-default">
+                                                <a onclick="insertOrder({{ i.id }})">ADD TO CART</a>
+                                            </button>
+                                        </div>
+                                        <div class="like">
+                                            <a onclick="inserWishlist({{ i.id }})"><i class="fa fa-heart-o"></i></a>
+                                        </div>
+                                    </li>
+                                </ul><!-- /.product -->
+                            {% endfor %}
+                        </div><!-- /.product-content -->
+
+                        <div class="product-pagination text-center margin-top-11 clearfix">
+                            <ul class="flat-pagination">
+                                <li class="prev">
+                                    <a href="#"><i class="fa fa-angle-left"></i></a>
+                                </li>
+                                <li><a href="#">1</a></li>
+                                <li class="active"><a href="#" title="">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+                            </ul><!-- /.flat-pagination -->
+                        </div>
+                    </div><!-- /.col-md-12 -->
+                </div><!-- /.row -->
+            {% endif %}
+        </div><!-- /.container -->
+    </section>
+
+{% endblock %}

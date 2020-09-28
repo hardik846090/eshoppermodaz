@@ -1,0 +1,282 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description"/>
+    <meta content="Coderthemes" name="author"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{% static 'eshoppermodaz/adminResources/images/favicon.ico' %}">
+    <!-- C3 charts css -->
+    <link href="eshoppermodaz/adminResources/css/c3.min.css" rel="stylesheet" type="text/css"/>
+
+
+    <!-- DataTables -->
+    <link href="{% static 'eshoppermodaz/adminResources/css/dataTables.bootstrap4.min.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'eshoppermodaz/adminResources/css/buttons.bootstrap4.min.css' %}" rel="stylesheet" type="text/css"/>
+    <!-- Responsive datatable examples -->
+    <link href="{% static 'eshoppermodaz/adminResources/css/responsive.bootstrap4.min.css' %}" rel="stylesheet" type="text/css"/>
+
+    <!-- App css -->
+    <link href="{% static 'eshoppermodaz/adminResources/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'eshoppermodaz/adminResources/css/icons.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'eshoppermodaz/adminResources/css/metismenu.min.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'eshoppermodaz/adminResources/css/style.css' %}" rel="stylesheet" type="text/css"/>
+
+    <script src="{% static 'eshoppermodaz/adminResources/js/modernizr.min.js' %}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script>
+        var loadFile = function (event) {
+            var image = document.getElementById('output');
+            image.src = URL.createObjectURL(event.target.files[0]);
+        };
+    </script>
+
+
+</head>
+
+
+<body>
+
+<!-- Begin page -->
+<div id="wrapper">
+
+    <!-- Top Bar Start -->
+    <div class="topbar">
+
+        <!-- LOGO -->
+        <div class="topbar-left">
+            <a href="/admin/loadDashbord" class="logo">
+                                <span>
+                                    <img src="{% static 'eshoppermodaz/adminResources/images/logo.jpg' %}" alt="" height="60">
+                                </span>
+                <i>
+                    <img src="{% static 'eshoppermodaz/adminResources/images/logo_sm.png' %}" alt="" height="28">
+                </i>
+            </a>
+        </div>
+
+        <nav class="navbar-custom">
+
+            <ul class="list-inline float-right mb-0">
+
+                <li class="list-inline-item dropdown notification-list">
+                    <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown"
+                       href="#" role="button"
+                       aria-haspopup="false" aria-expanded="false">
+                        <img src="{% static 'adminResources/images/download.jpg' %}" alt="user" class="rounded-circle">
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right profile-dropdown " aria-labelledby="Preview">
+                        <!-- item-->
+                        <div class="dropdown-item noti-title">
+                            <h5 class="text-overflow">
+                                <small>Welcome ! {{ request.session.login_UserName }}</small>
+                            </h5>
+                        </div>
+
+                        <!-- item-->
+                        <a href="/admin/loadDashbord" class="dropdown-item notify-item">
+                            <span><i class="fa fa-user"></i>Profile</span>
+                        </a>
+
+                        <!-- item-->
+                        <a href="/admin/loadDashbord" class="dropdown-item notify-item">
+                            <span><i class="fa fa-gear"></i>Settings</span>
+                        </a>
+
+                        <!-- item-->
+                        <a href="/loadLogin" class="dropdown-item notify-item">
+                            <span><i class="fa fa-power-off"></i>Logout</span>
+                        </a>
+
+                    </div>
+                </li>
+
+            </ul>
+
+            <ul class="list-inline menu-left mb-0">
+                <li class="hide-phone app-search">
+                    <form role="search" class="">
+                        <input type="text" placeholder="Search..." class="form-control">
+                        <a href=""><i class="fa fa-search"></i></a>
+                    </form>
+                </li>
+            </ul>
+
+        </nav>
+
+    </div>
+    <!-- Top Bar End -->
+
+
+    <!-- ========== Left Sidebar Start ========== -->
+    <div class="left side-menu">
+        <div class="slimscroll-menu" id="remove-scroll">
+
+            <!--- Sidemenu -->
+            <div id="sidebar-menu">
+                <!-- Left Menu Start -->
+                <ul class="metismenu" id="side-menu">
+                    {#                    <li class="menu-title">Navigation</li>#}
+                    <li>
+                        <a href="/admin/loadDashbord">
+                            <i class="fa fa-dashboard"></i> <span> Dashboard </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript: void(0);"><i class="fa fa-users"></i> <span> User Management </span> <span
+                                class="menu-arrow"></span></a>
+                        <ul class="nav-second-level" aria-expanded="false">
+                            <li><a href="/admin/viewAdmin">admin</a></li>
+                            <li><a href="/admin/viewUser">user</a></li>
+
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript: void(0);"><i
+                                class="fa fa-product-hunt"></i><span>Product Management </span> <span
+                                class="menu-arrow"></span></a>
+                        <ul class="nav-second-level" aria-expanded="false">
+                            <li><a href="/admin/loadDataset">Add Dataset</a></li>
+                            <li><a href="/admin/loadProduct">Add Product</a></li>
+                            <li><a href="/admin/viewProduct">View Product</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="javascript: void(0);"><i class="fa fa-send"></i> <span> Category Management </span>
+                            <span
+                                    class="menu-arrow"></span></a>
+                        <ul class="nav-second-level" aria-expanded="false">
+                            <li><a href="/admin/viewCategory">Category</a></li>
+                            <li><a href="/admin/viewSubcategory">Subcategory</a></li>
+                            <li><a href="/admin/viewType">Type</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript: void(0);"><i class="fi-briefcase"></i> <span> Coupon Management </span>
+                            <span
+                                    class="menu-arrow"></span></a>
+                        <ul class="nav-second-level" aria-expanded="false">
+                            <li><a href="/admin/loadCoupon">Add Coupon</a></li>
+                            <li><a href="/admin/viewCoupon">View Coupon</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript: void(0);"><i class="fa fa-file-picture-o"></i>
+                            <span> Benner Management </span>
+                            <span
+                                    class="menu-arrow"></span></a>
+                        <ul class="nav-second-level" aria-expanded="false">
+                            <li><a href="/admin/loadBenner">Add Benner</a></li>
+                            <li><a href="/admin/viewBenner">view Benner</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="/admin/viewOrder"><i class="fa fa-gift"></i> <span> Order Management </span>
+                            <span
+                                    class="menu-arrow"></span></a>
+                    </li>
+                    <li>
+                        <a href="/admin/viewFeedback"><i class="fa fa-thumbs-up"></i> <span> Feedback Management </span>
+                            <span
+                                    class="menu-arrow"></span></a>
+                    </li>
+                    <li>
+                        <a href="/admin/viewComplain"><i class="fa fa-pencil-square"></i>
+                            <span> complain Management </span>
+                            <span
+                                    class="menu-arrow"></span></a>
+
+
+                </ul>
+
+            </div>
+            <!-- Sidebar -->
+            <div class="clearfix"></div>
+
+        </div>
+        <!-- Sidebar -left -->
+
+    </div>
+    <!-- Left Sidebar End -->
+    {% block content %}
+
+    {% endblock %}
+
+</div>
+<!-- END wrapper -->
+
+
+<!-- jQuery  -->
+<script src="{% static 'eshoppermodaz/adminResources/js/jquery.min.js' %}"></script>
+<script src="{% static 'eshoppermodaz/adminResources/js/popper.min.js' %}"></script><!-- Popper for Bootstrap -->
+<script src="{% static 'eshoppermodaz/adminResources/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'eshoppermodaz/adminResources/js/metisMenu.min.js' %}"></script>
+<script src="{% static 'eshoppermodaz/adminResources/js/waves.js' %}"></script>
+<script src="{% static 'eshoppermodaz/adminResources/js/jquery.slimscroll.js' %}"></script>
+
+<!-- Required datatable js -->
+<script src="{% static 'eshoppermodaz/adminResources/js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'eshoppermodaz/adminResources/js/dataTables.bootstrap4.min.js' %}"></script>
+<!-- Buttons examples -->
+<script src="{% static 'eshoppermodaz/adminResources/js/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'eshoppermodaz/adminResources/js/buttons.bootstrap4.min.js' %}"></script>
+<script src="{% static 'eshoppermodaz/adminResources/js/jszip.min.js' %}"></script>
+<script src="{% static 'eshoppermodaz/adminResources/js/pdfmake.min.js' %}"></script>
+<script src="{% static 'eshoppermodaz/adminResources/js/vfs_fonts.js' %}"></script>
+<script src="{% static 'eshoppermodaz/adminResources/js/buttons.html5.min.js' %}"></script>
+<script src="{% static 'eshoppermodaz/adminResources/js/buttons.print.min.js' %}"></script>
+<script src="{% static 'eshoppermodaz/adminResources/js/buttons.colVis.min.js' %}"></script>
+<!-- Responsive examples -->
+<script src="{% static 'eshoppermodaz/adminResources/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'eshoppermodaz/adminResources/js/responsive.bootstrap4.min.js' %}"></script>
+<!-- Parsley js -->
+<script type="text/javascript" src="{% static 'eshoppermodaz/adminResources/js/parsley.min.js' %}"></script>
+<!-- Counter js  -->
+<script src="{% static 'eshoppermodaz/adminResources/js/jquery.waypoints.min.js' %}"></script>
+<script src="{% static 'eshoppermodaz/adminResources/js/jquery.counterup.min.js' %}"></script>
+
+<!--C3 Chart-->
+<script type="text/javascript" src="{% static 'eshoppermodaz/adminResources/js/d3.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'eshoppermodaz/adminResources/js/c3.min.js' %}"></script>
+
+<!--Echart Chart-->
+<script src="{% static 'eshoppermodaz/adminResources/js/echarts-all.js' %}"></script>
+
+<!-- Dashboard init -->
+<script src="{% static 'eshoppermodaz/adminResources/js/jquery.dashboard.js' %}"></script>
+
+<!-- App js -->
+<script src="{% static 'eshoppermodaz/adminResources/js/jquery.core.js' %}"></script>
+<script src="{% static 'eshoppermodaz/adminResources/js/jquery.app.js' %}"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#datatable').DataTable();
+
+        //Buttons examples
+        var table = $('#datatable-buttons').DataTable({
+            lengthChange: false,
+            buttons: ['copy', 'excel', 'pdf', 'colvis']
+        });
+
+        table.buttons().container()
+            .appendTo('#datatable-buttons_wrapper .col-md-6:eq(0)');
+    });
+
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('form').parsley();
+    });
+</script>
+
+
+</body>
+</html>

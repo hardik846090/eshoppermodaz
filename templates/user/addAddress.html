@@ -1,0 +1,73 @@
+{% extends 'user/base.html' %}
+
+{% load static %}
+
+{% block title %}AddAddress Page{% endblock %}
+
+{% block content %}
+
+    <style>
+        .parallax1 {
+            background-image: url("{% static '/userResources/jpg/bg-parallax1.jpg' %}");
+        }
+
+    </style>
+
+
+    <div class="page-title parallax parallax1" style="background-position: 50% 89px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="page-title-heading">
+                        <h1 class="title">Address</h1>
+                    </div><!-- /.page-title-heading -->
+                    <div class="breadcrumbs">
+                        <ul>
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/loadAddress">Address</a></li>
+                        </ul>
+                    </div><!-- /.breadcrumbs -->
+                </div><!-- /.col-md-12 -->
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+    </div>
+
+    <section id="cart_items" style="margin-top: 20px;">
+        <div class="container">
+            <div class="shopper-informations">
+                <center>
+                    <div class="row">
+                        <div class="col-sm-8 clearfix" style="width: 80%; padding-left: 300px;">
+
+                            <div class="bill-to">
+                                <div class="form-one" style="width: 80%">
+                                    <form method="post" action="/insertAddress">
+                                        {% csrf_token %}
+                                        <input type="text" name="fullName" id="fn" placeholder="Full Name *" required>
+                                        <input type="tel" name="mobileNo" placeholder="Mobile Number *"
+                                               pattern="[0-9]{10}" required>
+                                        <input type="tel" name="alternetMobileNo"
+                                               placeholder="Alternate Mobile Number(Optional)" pattern="[0-9]{10}">
+                                        <input type="text" name="PINCode" placeholder="PIN Code *" required>
+                                        <input name="home" id="flat" type="text"
+                                               placeholder="Flat, House no., Building, Company, Apartment *" required>
+                                        <input name="address" id="area" type="text"
+                                               placeholder="Area, Colony, Street, Sector, Village *" required>
+                                        <input name="landmark" id="" type="text" placeholder="Landmark">
+                                        <input name="town" id="town" type="text" placeholder="town *" required>
+                                        <input name="state" id="state" type="text" placeholder="state *" required>
+                                        <input name="country" id="state" type="text" placeholder="country *" required>
+                                        <button type="submit" class="btn btn-default" style="margin-top: 10px; margin-bottom: 30px;">Submit</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </center>
+            </div>
+        </div>
+    </section> <!--/#cart_items-->
+
+    <br>
+
+{% endblock %}
